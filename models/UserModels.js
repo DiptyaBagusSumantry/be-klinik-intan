@@ -63,77 +63,59 @@ const User = (sequelizeInstance) => {
       },
       fullname: {
         type: Sequelize.STRING,
-        // allowNull: false,
-        // validate: {
-        //   notNull: {
-        //     args: true,
-        //     msg: "Fullname Can't be Null!",
-        //   },
-        //   notEmpty: {
-        //     args: true,
-        //     msg: "Fullname Can't be Empty!",
-        //   },
-        // },
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Fullname Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Fullname Can't be Empty!",
+          },
+        },
       },
       phone: {
         type: Sequelize.STRING,
-        // unique: {
-        //   args: "phone",
-        //   msg: "Phone Already Registered!",
-        // },
-        // allowNull: false,
-        // validate: {
-        //   notNull: {
-        //     args: true,
-        //     msg: "Phone Can't be Null",
-        //   },
-        //   notEmpty: {
-        //     args: true,
-        //     msg: "Phone Can't be Empty",
-        //   },
-        //   isNumeric: {
-        //     args: true,
-        //     msg: "Phone Must be Number",
-        //   },
-        //   len: {
-        //     args: [10, 15],
-        //     msg: "Phone Must be 10 - 15 Number!",
-        //   },
-        // },
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Phone Can't be Null",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Phone Can't be Empty",
+          },
+          isNumeric: {
+            args: true,
+            msg: "Phone Must be Number",
+          },
+          len: {
+            args: [10, 15],
+            msg: "Phone Must be 10 - 15 Number!",
+          },
+        },
       },
       email: {
         type: Sequelize.STRING,
-        // allowNull: false,
-        // unique: {
-        //   args: "email",
-        //   msg: "Email Already Registered!",
-        // },
-        // validate: {
-        //   notEmpty: {
-        //     args: true,
-        //     msg: "Email Can't Be Empty!",
-        //   },
-        //   notNull: {
-        //     args: true,
-        //     msg: "Email Can't be Null!",
-        //   },
-        //   isEmail: {
-        //     args: true,
-        //     msg: "Invalid Email Address!",
-        //   },
-        // },
-      },
-      role: {
-        type: Sequelize.STRING,
         allowNull: false,
+        unique: {
+          args: "email",
+          msg: "Email Already Registered!",
+        },
         validate: {
           notEmpty: {
             args: true,
-            msg: "role can't be empty",
+            msg: "Email Can't Be Empty!",
           },
           notNull: {
             args: true,
-            msg: "role can't be null",
+            msg: "Email Can't be Null!",
+          },
+          isEmail: {
+            args: true,
+            msg: "Invalid Email Address!",
           },
         },
       },

@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 
-const Medicine = (sequelizeInstance) => {
+const reservation = (sequelizeInstance) => {
   return sequelizeInstance.define(
-    "Medicine",
+    "reservations",
     {
       id: {
         type: Sequelize.UUID,
@@ -11,49 +11,59 @@ const Medicine = (sequelizeInstance) => {
         allowNull: false,
         unique: "id",
       },
-      name: {
-        type: Sequelize.STRING,
+      date_birth: {
+        type: Sequelize.DATEONLY,
         allowNull: false,
         validate: {
           notNull: {
             args: true,
-            msg: "Name Payment Can't be Null!",
+            msg: "Date Birth Can't be Null!",
           },
           notEmpty: {
             args: true,
-            msg: "Name Payment Can't be Empty!",
+            msg: "Date Birth Can't be Empty!",
           },
         },
       },
-      price: {
-        type: Sequelize.STRING,
+      diagnosis: {
+        type: Sequelize.TEXT,
         allowNull: false,
         validate: {
           notNull: {
             args: true,
-            msg: "Price Can't be Null!",
+            msg: "Diagnosis Can't be Null!",
           },
           notEmpty: {
             args: true,
-            msg: "Price Can't be Empty!",
+            msg: "Diagnosis Can't be Empty!",
           },
         },
       },
-      code: {
-        type: Sequelize.STRING,
+      service: {
+        type: Sequelize.TEXT,
         allowNull: false,
-        unique: {
-          args: "code",
-          msg: "Code Already Registered!",
-        },
         validate: {
           notNull: {
             args: true,
-            msg: "Code Can't be Null!",
+            msg: "Service Can't be Null!",
           },
           notEmpty: {
             args: true,
-            msg: "Code Can't be Empty!",
+            msg: "Service Can't be Empty!",
+          },
+        },
+      },
+      queue: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Queue Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Queue Can't be Empty!",
           },
         },
       },
@@ -66,4 +76,4 @@ const Medicine = (sequelizeInstance) => {
   );
 };
 
-module.exports = Medicine;
+module.exports = reservation;

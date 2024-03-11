@@ -4,11 +4,10 @@ const app = express();
 const cors = require("cors");
 const router = require("./routes/index.js");
 const Models = require("./models/index");
-const cookieParser = require("cookie-parser");
 const { createAdmin } = require("./seeders/AdminSeeders.js");
 const path = require("path");
 
-// //Insialisasi ke Database
+// // Insialisasi ke Database
 // Models.sequelizeInstance
 //   .sync({ force: false, alter: true })
 //   .then(async () => {
@@ -31,9 +30,8 @@ app.get("/", (req, res) => {
   res.send("API Running");
 });
 
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "50mb" }));
 app.use(
   "/assets/images/laporan",
   express.static(path.join(__dirname, "assets/images/laporan"))
@@ -54,6 +52,6 @@ app.use(
 
 app.use(router);
 
-app.listen(process.env.PORT || 5003, () => {
-  console.log("Server running at port 5003");
+app.listen(process.env.PORT || 5005, () => {
+  console.log("Server running at port 5005");
 });

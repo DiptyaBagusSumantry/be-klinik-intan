@@ -16,8 +16,7 @@ async function IsAdmin(req, res, next) {
         return decoded;
       }
     );
-
-    if (user.role !== "admin") {
+    if (user.role !== "Admin") {
       return res.status(403).json({ msg: `Your role is not allowed!` });
     } else {
       next();

@@ -1,10 +1,11 @@
 const dbConfig = require("../config/config.js");
 const Sequelize = require("sequelize");
 const User = require("./UserModels.js");
-const Patient = require("./PatientModel.js");
-const HistoryPatient = require("./HistoryPatientModel.js");
-const Transaction = require("./TransactionModel.js");
-const Medicine = require("./MedicineModel.js");
+const Patient = require("./PatientModels.js");
+const Reservation = require("./ReservationModels.js");
+const Transaction = require("./TransactionModels.js");
+const Service = require("./ServiceModels.js");
+const Role = require("./RoleModels.js")
 
 const sequelizeInstance = new Sequelize(
   dbConfig.DB,
@@ -27,45 +28,66 @@ const db = {};
 db.sequelizeInstance = sequelizeInstance;
 db.User = User(sequelizeInstance);
 db.Patient = Patient(sequelizeInstance);
-db.HistoryPatient = HistoryPatient(sequelizeInstance);
+db.Reservation = Reservation(sequelizeInstance);
 db.Transaction = Transaction(sequelizeInstance);
-db.Medicine = Medicine(sequelizeInstance);
+db.Service = Service(sequelizeInstance);
+db.Role = Role(sequelizeInstance)
 
-// History Patient - Patient
-db.Patient.hasMany(db.HistoryPatient, {
-  foreignKey: {
-    name: "patientId",
-    type: Sequelize.UUID,
-    allowNull: false,
-  },
-});
+//Role - User
+db.Role.hasMany(db.User, {
+    foreignKey: {
+        name: 'roleId',
+        type: Sequelize.UUID,
+        allowNull: false
+    }
+})
 
-db.HistoryPatient.belongsTo(db.Patient, {
+db.User.belongsTo(db.Role, {
   targetKey: "id",
 });
-// Transaction - Patient
-db.Patient.hasMany(db.Transaction, {
-  foreignKey: {
-    name: "patientId",
-    type: Sequelize.UUID,
-    allowNull: false,
-  },
-});
 
-db.Transaction.belongsTo(db.Patient, {
+//User - Patient
+db.User.hasMany(db.Patient, {
+    foreignKey: {
+        name: 'userId',
+        type: Sequelize.UUID,
+        allowNull: false
+    }
+})
+
+db.Patient.belongsTo(db.User, {
   targetKey: "id",
 });
-// Transaction - HistoryPatient
-db.HistoryPatient.hasMany(db.Transaction, {
-  foreignKey: {
-    name: "historyPatientId",
-    type: Sequelize.UUID,
-    allowNull: false,
-  },
-});
 
-db.Transaction.belongsTo(db.HistoryPatient, {
+//Patient - Reservation
+db.Patient.hasMany(db.Reservation, {
+    foreignKey: {
+        name: 'patientId',
+        type: Sequelize.UUID,
+        allowNull: false
+    }
+})
+
+db.Reservation.belongsTo(db.Patient, {
   targetKey: "id",
 });
+
+
+//Transaction - Reservation
+db.Reservation.hasOne(db.Transaction, {
+    foreignKey: {
+        name: 'reservationId',
+        type: Sequelize.UUID,
+        allowNull: false
+    }
+})
+
+db.Transaction.belongsTo(db.Reservation, {
+  targetKey: "id",
+});
+
+
+
+
 
 module.exports = db;

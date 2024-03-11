@@ -11,21 +11,39 @@ const Patient = (sequelizeInstance) => {
         allowNull: false,
         unique: "id",
       },
-      number_regristation: {
+      no_rm: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: {
-          args: "number_regristation",
-          msg: "Number Regristation Already Registered!",
+          args: "no_rm",
+          msg: "Number Rekam Medis Already Registered!",
         },
         validate: {
           notNull: {
             args: true,
-            msg: "Number Regristation Can't be Null!",
+            msg: "Number Rekam Medis Can't be Null!",
           },
           notEmpty: {
             args: true,
-            msg: "Number Regristation Can't be Empty!",
+            msg: "Number Rekam Medis Can't be Empty!",
+          },
+        },
+      },
+      nik: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: {
+          args: "nik",
+          msg: "NIK Already Registered!",
+        },
+        validate: {
+          notNull: {
+            args: true,
+            msg: "NIK Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "NIK Can't be Empty!",
           },
         },
       },
@@ -136,20 +154,6 @@ const Patient = (sequelizeInstance) => {
           len: {
             args: [10, 15],
             msg: "Phone Must be 10 - 15 Number!",
-          },
-        },
-      },
-      history_illness: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "History Illness Can't be Null!",
-          },
-          notEmpty: {
-            args: true,
-            msg: "History Illness Can't be Empty!",
           },
         },
       },

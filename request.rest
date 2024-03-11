@@ -1,0 +1,33 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhZmI1NDBmLTNlN2ItNDMwYS1iYTUyLTIyY2I0OWY0ODE2OCIsImZ1bGxuYW1lIjoiYWRtaW4iLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MTAxNjk0NTgsImV4cCI6MTcxMDUxNTA1OH0.3ZOImrYOt1c9M4OPRnvY91vBJ-4VRheTPBKlKdPRz0s
+
+###
+POST http://localhost:5005/register
+Content-Type: application/json
+
+{
+    "username": "user",
+    "password": "User1234!",
+    "fullname": "user",
+    "phone": "08123456783",
+    "email": "user@gmail.com"
+}
+
+###
+POST http://localhost:5005/login
+Content-Type: application/json
+
+{
+    "username" : "085123456789",
+    "password" : "Admin1234!"
+}
+
+###
+GET http://localhost:5005/fetch
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+###
+GET http://localhost:5005/user
+Authorization: Bearer {{token}}
+

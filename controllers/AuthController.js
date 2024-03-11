@@ -1,6 +1,8 @@
 const Models = require("../models/index.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
+const { accesToken } = require("../helper/chekAccessToken.js");
 const { handlerError, handleCreate } = require("../helper/HandlerError.js");
 
 const User = Models.User;
@@ -10,11 +12,14 @@ class AuthController {
     try {
       //scope show password setting in models
       const user = await User.scope("visiblePassword").findOne({
-        where: { username: req.body.username },
+        include: { model: Models.Role },
+        where: {
+          [Op.or]: { username: req.body.username, phone: req.body.username },
+        },
       });
+
       if (!user)
         return res.status(400).json({ msg: "username tidak ditemukan" });
-
       //check password
       const match = await bcrypt.compare(req.body.password, user.password);
       if (!match) return res.status(400).json({ msg: "password anda salah" });
@@ -23,41 +28,27 @@ class AuthController {
       const accessToken = jwt.sign(
         {
           id: user.id,
-          role: user.role,
+          role: user.role.name,
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
           expiresIn: "5760m", //detik expreid 5 menit
         }
       );
-
       res.status(200).json({
         accessToken: accessToken,
         role: user.role.name,
       });
     } catch (error) {
-      res.status(500).json({
-        message: error.message,
-      });
+      handlerError(res, error);
     }
   }
 
   static async Fetch(req, res) {
     try {
-      const authHeader = req.headers["authorization"];
-      const token = authHeader && authHeader.split(" ")[1];
-
-      const user = jwt.verify(
-        token,
-        process.env.REFRESH_TOKEN_SECRET,
-        (error, decoded) => {
-          if (error) return res.sendStatus(403);
-          return decoded;
-        }
-      );
+      const user = accesToken(req);
       const fetch = await User.findOne({
-        where: { id: user.id },
-        attributes: ["username"],
+        where: { id: user.id }
       }).then((data) => {
         return {
           username: data.username,
@@ -66,25 +57,24 @@ class AuthController {
       });
       return res.status(200).json(fetch);
     } catch (error) {
-      res.status(500).json({
-        message: error.message,
-      });
+      handlerError(res, error);
     }
   }
 
   static async register(req, res) {
     try {
-      const { username, password, role, fullname, phone, email } = req.body;
-
+      const { username, password, fullname, phone, email } = req.body;
+      const role = await Models.Role.findOne({where: {name: "user"}})
+      
       await Models.User.create({
         username,
         password,
-        role,
         fullname,
         phone,
         email,
-      })
-      handleCreate(res)
+        roleId: role.id,
+      });
+      handleCreate(res);
     } catch (error) {
       handlerError(res, error);
     }
@@ -105,9 +95,7 @@ class AuthController {
         }
       );
     } catch (error) {
-      res.status(500).json({
-        message: error.message,
-      });
+      handlerError(res, error);
     }
   }
 }
