@@ -97,8 +97,8 @@ const Patient = (sequelizeInstance) => {
           },
           isDate: {
             args: true,
-            msg: "Date Must be format dd-mm-yyyy"
-          }
+            msg: "Date Must be format yyyy-mm-dd",
+          },
         },
       },
       gender: {

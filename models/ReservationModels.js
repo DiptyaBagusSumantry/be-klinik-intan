@@ -11,17 +11,21 @@ const reservation = (sequelizeInstance) => {
         allowNull: false,
         unique: "id",
       },
-      date_birth: {
+      date: {
         type: Sequelize.DATEONLY,
         allowNull: false,
         validate: {
           notNull: {
             args: true,
-            msg: "Date Birth Can't be Null!",
+            msg: "Date Can't be Null!",
           },
           notEmpty: {
             args: true,
-            msg: "Date Birth Can't be Empty!",
+            msg: "Date Can't be Empty!",
+          },
+          isDate: {
+            args: true,
+            msg: "Date Must be format yyyy-mm-dd",
           },
         },
       },

@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhYWZmMWMxLTFiODEtNDY5OC04ZDgzLWE2YmI5ZjhkYWI5NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzEwMjE4MTE5LCJleHAiOjE3MTA1NjM3MTl9.w2mVBIuLgnONQa9O6SvK226VPqEePpX5DZFmRWy4wg0
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhZmI1NDBmLTNlN2ItNDMwYS1iYTUyLTIyY2I0OWY0ODE2OCIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxMDIyNTY0MywiZXhwIjoxNzEwNTcxMjQzfQ.AOw9mEfGRyMmB3Lgs3oBzPg8ljKIZ5dtYkY48GXkvoE
 
 ###
 POST http://localhost:5005/register
@@ -17,8 +17,8 @@ POST http://localhost:5005/login
 Content-Type: application/json
 
 {
-    "username" : "user",
-    "password" : "User1234!"
+    "username" : "admin",
+    "password" : "Admin1234!"
 }
 
 ###
@@ -38,18 +38,55 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "nik": "1234567891234567",
+    "nik": "1234567891236457",
     "fullname": "Oke Gas",
     "place_birth": "Oke Gas",
-    "date_birth": "01-01-2024",
+    "date_birth": "2024-03-12-",
     "gender": "Oke Gas",
     "address": "Oke Gas",
     "work": "Oke Gas",
-    "phone": "012345678921",
+    "phone": "01234568921",
     "id_user": "Oke Gas"
 }
 
 ###
 GET http://localhost:5005/patient
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+POST http://localhost:5005/reservation
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "date": "2024-03-11",
+    "diagnosis": "klinik gigi",
+    "service": [{
+        "name": "periksa gigi",
+        "price": "50000"
+    },{
+        "name": "tambal gigi",
+        "price": "10000"
+    }],
+    "queue": "56",
+    "patient_id": "2a819895-8e06-4eb0-ada4-baad60b76b18"
+}
+
+//LIST ALL RESERVATION ==> ONLY ADMIN 
+###
+GET http://localhost:5005/reservation
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//Detail Patient ==> ADMIN USER
+###
+GET http://localhost:5005/reservation/3d3d349a-5876-4ac9-b71e-1166bed134df
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//LIST reservation by patient Id ==> ONLY USER
+###
+GET http://localhost:5005/reservation-patient/2a819895-8e06-4eb0-ada4-baad60b76b18
 Authorization: Bearer {{token}}
 Content-Type: application/json

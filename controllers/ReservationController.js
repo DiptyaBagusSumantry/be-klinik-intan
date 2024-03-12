@@ -1,5 +1,5 @@
 const Models = require("../models/index");
-const RekamMedis = Models.HistoryPatient;
+const Reservation = Models.Reservation;
 const Patient = Models.Patient;
 const Transaction = Models.Transaction;
 const {
@@ -11,21 +11,13 @@ const {
 } = require("../helper/HandlerError.js");
 const { paginator } = require("../helper/Pagination.js");
 const { searchWhere } = require("../helper/Search.js");
+const { accesToken } = require("../helper/chekAccessToken.js");
 
 class ReservationController {
   static async createReservation(req, res) {
     try {
-      const {
-        date,
-        diagnosis,
-        therapy,
-        service,
-        description,
-        odontogram,
-        patient_id,
-      } = req.body;
+      const { date, diagnosis, service, patient_id } = req.body;
 
-      //count total pyemnt
       let total_payment = 0;
       service.forEach((element) => {
         total_payment += parseInt(element.price);
@@ -35,22 +27,25 @@ class ReservationController {
         return handlerError(res, err);
       }
 
-      const createRM = await Reservation.create({
+      //queue
+      let countPatient = await Reservation.findAll({
+        where: { date },
+      });
+      if (countPatient.length <= 0) {
+        countPatient.push({ queue: "000" });
+      }
+      countPatient.sort((a, b) => {
+        return parseInt(b.queue) - parseInt(a.queue);
+      });
+      const numberRm = parseInt(countPatient[0].queue) + 1;
+      const queue = String(numberRm).padStart(3, "0");
+
+      await Reservation.create({
         date,
         diagnosis,
-        therapy,
+        queue,
         service: JSON.stringify(service),
-        description,
-        odontogram: JSON.stringify(odontogram),
         patientId: patient_id,
-      });
-
-      await Transaction.create({
-        invoice: `${new Date().getTime()}`,
-        purchased: JSON.stringify(service),
-        total_payment: total_payment.toString(),
-        patientId: patient_id,
-        historyPatientId: createRM.id,
       });
 
       handleCreate(res);
@@ -58,178 +53,107 @@ class ReservationController {
       handlerError(res, error);
     }
   }
-  // static async getRM(req, res) {
-  //   try {
-  //     const { page, search, sorting } = req.query;
-  //     let whereClause = { include: { model: Patient } };
-  //     //sorting
-  //     whereClause.order = [["createdAt", sorting ? sorting : "DESC"]];
+  static async getReservation(req, res) {
+    try {
+      const { page, search, sorting } = req.query;
+      let whereClause = { include: { model: Patient }, where: {} };
+      //sorting
+      whereClause.order = [["createdAt", sorting ? sorting : "DESC"]];
 
-  //     //searching
-  //     if (search) {
-  //       whereClause.where = searchWhere(search, "number_regristation", "phone");
-  //     }
+      //searching
+      if (search) {
+        whereClause.where = searchWhere(search, "queue", "id");
+      }
 
-  //     await Reservation.findAll(whereClause).then((get) => {
-  //       const results = get.map((data) => {
-  //         const {
-  //           id,
-  //           date,
-  //           description,
-  //           service,
-  //           odontogram,
-  //           diagnosis,
-  //           therapy,
-  //         } = data.dataValues;
-  //         const {
-  //           id : id_patient,
-  //           number_regristation,
-  //           fullname,
-  //           phone,
-  //           gender,
-  //         } = data.dataValues.patient;
-  //         let hasil = "";
-  //         const proses = JSON.parse(service);
-  //         proses.forEach((data) => {
-  //           hasil += data.name + ", ";
-  //         });
-  //         return {
-  //           id,
-  //           id_patient,
-  //           number_regristation,
-  //           description,
-  //           date,
-  //           fullname,
-  //           gender,
-  //           phone,
-  //           hasil,
-  //           diagnosis,
-  //           therapy,
-  //           odontogram: JSON.parse(odontogram)
-  //         };
-  //       });
-  //       handleGetPaginator(res, paginator(results, page ? page : 1, 20));
-  //     });
-  //   } catch (error) {
-  //     handlerError(res, error);
-  //   }
-  // }
-  // static async getDetailRM(req, res) {
-  //   try {
-  //     const get = await Reservation.findOne({
-  //       where: { id: req.params.id },
-  //       include: { model: Patient },
-  //     });
-  //     if (!get) {
-  //       return handleGet(res, get);
-  //     }
+      await Reservation.findAll(whereClause).then((get) => {
+        const results = get.map((data) => {
+          const { id, date, diagnosis, service, queue} = data.dataValues;
+          const {
+            id: id_patient,
+            no_rm,
+            fullname,
+            phone,
+            gender,
+          } = data.dataValues.patient;
+          let hasil = "";
+          const proses = JSON.parse(service);
+          proses.forEach((data) => {
+            hasil += data.name + ", ";
+          });
+          return {
+            id,
+            id_patient,
+            queue,
+            no_rm,
+            date,
+            fullname,
+            gender,
+            phone,
+            hasil,
+            diagnosis
+          };
+        });
+        handleGetPaginator(res, paginator(results, page ? page : 1, 20));
+      });
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async getDetailReservation(req, res) {
+    try {
+      const get = await Reservation.findOne({
+        where: { id: req.params.id },
+      });
+      if (!get) {
+        return handleGet(res, get);
+      }
 
-  //     const { id, diagnosis, therapy, description, date, service, odontogram } =
-  //       get.dataValues;
-  //     const {
-  //       number_regristation,
-  //       fullname,
-  //       place_birth,
-  //       date_birth,
-  //       gender,
-  //       phone,
-  //       address,
-  //       work,
-  //       history_illness,
-  //     } = get.dataValues.patient;
+      const { id, queue, diagnosis, date, service } =
+        get.dataValues;
 
-  //     const tgl = new Date(date).toLocaleDateString("id-ID", {
-  //       day: "2-digit",
-  //       month: "long",
-  //       year: "numeric",
-  //     });
+      const tgl = new Date(date).toLocaleDateString("id-ID", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
 
-  //     const data = {
-  //       id,
-  //       date: tgl,
-  //       number_regristation,
-  //       fullname,
-  //       place_birth,
-  //       date_birth,
-  //       gender,
-  //       phone,
-  //       address,
-  //       work,
-  //       history_illness,
-  //       diagnosis,
-  //       therapy,
-  //       description,
-  //       service: JSON.parse(service),
-  //       odontogram: JSON.parse(odontogram),
-  //     };
-  //     handleGet(res, data);
-  //   } catch (error) {
-  //     handlerError(res, error);
-  //   }
-  // }
-  // static async getDetailbyPatient(req, res) {
-  //   try {
-  //     const get = await Patient.findAll({
-  //       where: {
-  //         id: req.params.id,
-  //       },
-  //       include: {
-  //         model: Reservation,
-  //       },
-  //     });
-  //     if (get.length <= 0) {
-  //       return handleGet(res, get);
-  //     }
-  //     if (get[0].dataValues.history_patients.length <= 0) {
-  //       return handlerError(res, { message: "History Rekam Medis Not Found" });
-  //     }
-  //     const Reservation = get[0].dataValues.history_patients;
-  //     const data = Reservation.map((reuslt) => {
-  //       const {
-  //         id,
-  //         date,
-  //         diagnosis,
-  //         therapy,
-  //         description,
-  //         service,
-  //         odontogram,
-  //       } = reuslt.dataValues;
-  //       const {
-  //         number_regristation,
-  //         // fullname,
-  //         // place_birth,
-  //         // date_birth,
-  //         // gender,
-  //         // phone,
-  //         // address,
-  //         // work,
-  //         // history_illness,
-  //       } = get[0].dataValues;
-  //       return {
-  //         id,
-  //         number_regristation,
-  //         // fullname,
-  //         // place_birth,
-  //         // date_birth,
-  //         // gender,
-  //         // phone,
-  //         // address,
-  //         // work,
-  //         // history_illness,
-  //         date,
-  //         // diagnosis,
-  //         // therapy,
-  //         description,
-  //         service: JSON.parse(service),
-  //         odontogram: JSON.parse(odontogram),
-  //       };
-  //     });
-  //     // return res.send(data)
-  //     handleGet(res, data);
-  //   } catch (error) {
-  //     handlerError(res, error);
-  //   }
-  // }
+      const data = {
+        id,
+        queue,
+        date: tgl,
+        diagnosis,
+        service: JSON.parse(service),
+      };
+      handleGet(res, data);
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async getDetailbyPatient(req, res) {
+    try {
+      await Reservation.findAll({
+        where: {
+          patient_id: req.params.patientId
+        },
+        order : [["date", "DESC"]]
+      }).then(results=>{
+        const data = results.map(get =>{
+          const {id,date,diagnosis,service,queue} = get.dataValues
+          const parseService= JSON.parse(service)
+          return {
+            id,
+            queue,
+            date,
+            diagnosis,
+            service: parseService,
+          };
+        })
+        handleGet(res, data);
+      })
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
   // static async deleteReservation(req, res) {
   //   try {
   //     const deleteRM = await Reservation.destroy({

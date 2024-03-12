@@ -25,5 +25,27 @@ async function IsAdmin(req, res, next) {
     return res.status(500).json({ msg: `roleChecker:\n ${error.message}` });
   }
 }
+async function IsUser(req, res, next) {
+  try {
+     const authHeader = req.headers["authorization"];
+     const token = authHeader && authHeader.split(" ")[1];
 
-module.exports = { IsAdmin };
+    const user = jwt.verify(
+      token,
+      process.env.REFRESH_TOKEN_SECRET,
+      (error, decoded) => {
+        if (error) return res.sendStatus(403);
+        return decoded;
+      }
+    );
+    if (user.role !== "User") {
+      return res.status(403).json({ msg: `Your role is not allowed!` });
+    } else {
+      next();
+    }
+  } catch (error) {
+    return res.status(500).json({ msg: `roleChecker:\n ${error.message}` });
+  }
+}
+
+module.exports = { IsAdmin, IsUser };

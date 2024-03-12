@@ -25,20 +25,10 @@ class PatientController {
         gender,
         address,
         work,
-        phone,
-        user_id,
+        phone
       } = req.body;
 
-      const token = accesToken(req);
-      let userId = token.id;
-      if (token.role == "Admin") {
-        userId = user_id;
-      }
-      if (!userId) {
-        return handlerError(res, {
-          message: "Your Role is Admin, Please insert user_id",
-        });
-      }
+      const userId = accesToken(req).id;
 
       //no_rm
       let countPatient = await Patient.findAll({
@@ -86,7 +76,7 @@ class PatientController {
       if (token.role != "Admin") {
         whereClause.where.user_id = token.id
       }
-      console.log(whereClause)
+      
       await Patient.findAll(whereClause).then((data) => {
         const results = data.map((patient) => {
           const {
