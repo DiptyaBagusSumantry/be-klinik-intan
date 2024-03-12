@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhZmI1NDBmLTNlN2ItNDMwYS1iYTUyLTIyY2I0OWY0ODE2OCIsImZ1bGxuYW1lIjoiYWRtaW4iLCJyb2xlIjoiQWRtaW4iLCJpYXQiOjE3MTAxNjk0NTgsImV4cCI6MTcxMDUxNTA1OH0.3ZOImrYOt1c9M4OPRnvY91vBJ-4VRheTPBKlKdPRz0s
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhYWZmMWMxLTFiODEtNDY5OC04ZDgzLWE2YmI5ZjhkYWI5NyIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzEwMjE4MTE5LCJleHAiOjE3MTA1NjM3MTl9.w2mVBIuLgnONQa9O6SvK226VPqEePpX5DZFmRWy4wg0
 
 ###
 POST http://localhost:5005/register
@@ -17,8 +17,8 @@ POST http://localhost:5005/login
 Content-Type: application/json
 
 {
-    "username" : "085123456789",
-    "password" : "Admin1234!"
+    "username" : "user",
+    "password" : "User1234!"
 }
 
 ###
@@ -30,4 +30,26 @@ Content-Type: application/json
 ###
 GET http://localhost:5005/user
 Authorization: Bearer {{token}}
+Content-Type: application/json
 
+###
+POST http://localhost:5005/patient
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nik": "1234567891234567",
+    "fullname": "Oke Gas",
+    "place_birth": "Oke Gas",
+    "date_birth": "01-01-2024",
+    "gender": "Oke Gas",
+    "address": "Oke Gas",
+    "work": "Oke Gas",
+    "phone": "012345678921",
+    "id_user": "Oke Gas"
+}
+
+###
+GET http://localhost:5005/patient
+Authorization: Bearer {{token}}
+Content-Type: application/json

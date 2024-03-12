@@ -1,5 +1,5 @@
 const Models = require("../models/index");
-const RekamMedis = Models.HistoryPatient;
+const Reservation = Models.Reservation;
 const Patient = Models.Patient;
 const Transaction = Models.Transaction;
 const {

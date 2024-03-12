@@ -45,6 +45,14 @@ const Patient = (sequelizeInstance) => {
             args: true,
             msg: "NIK Can't be Empty!",
           },
+          len: {
+            args: 16,
+            msg: "NIK Must be 16 Number!",
+          },
+          isNumeric: {
+            args: true,
+            msg: "Phone Must be Number",
+          },
         },
       },
       fullname: {
@@ -87,6 +95,10 @@ const Patient = (sequelizeInstance) => {
             args: true,
             msg: "Date Birth Can't be Empty!",
           },
+          isDate: {
+            args: true,
+            msg: "Date Must be format dd-mm-yyyy"
+          }
         },
       },
       gender: {
