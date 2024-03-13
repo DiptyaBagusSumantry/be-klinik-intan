@@ -12,12 +12,12 @@ const { paginator } = require("../helper/Pagination.js");
 const { searchWhere } = require("../helper/Search.js");
 
 class TransactionController {
-  static async getInvoice(req, res) {
+  static async getTransaction(req, res) {
     try {
       const { page, search, sorting, invoiceId } = req.query;
       // const invoiceId = req.query.invoiceId;
       const whereClause = {
-        include: { model: Patient },
+        // include: { model: Patient },
       };
       //sorting
       whereClause.order = [["createdAt", sorting ? sorting : "DESC"]];
@@ -37,7 +37,7 @@ class TransactionController {
       const results = getInvoice.map((data) => {
         let { id, invoice, total_payment, status, purchased, createdAt } =
           data.dataValues;
-        const { fullname } = data.dataValues.patient;
+        // const { fullname } = data.dataValues.patient;
         createdAt = new Date(createdAt).toLocaleDateString("id-ID", {
           day: "2-digit",
           month: "long",
@@ -49,7 +49,7 @@ class TransactionController {
           total_payment,
           status,
           createdAt,
-          fullname,
+          // fullname,
           purchased: JSON.parse(purchased),
         };
       });
@@ -58,21 +58,21 @@ class TransactionController {
       handlerError(res, error);
     }
   }
-  static async updateInvoice(req, res) {
-    try {
-      const update = await Transaction.update(
-        { status: req.body.status },
-        {
-          where: {
-            id: req.params.id,
-          },
-        }
-      );
-      handleUpdate(res, update);
-    } catch (error) {
-      handlerError(res, error);
-    }
-  }
+  // static async updateInvoice(req, res) {
+  //   try {
+  //     const update = await Transaction.update(
+  //       { status: req.body.status },
+  //       {
+  //         where: {
+  //           id: req.params.id,
+  //         },
+  //       }
+  //     );
+  //     handleUpdate(res, update);
+  //   } catch (error) {
+  //     handlerError(res, error);
+  //   }
+  // }
 }
 
 module.exports = TransactionController;

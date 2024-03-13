@@ -10,7 +10,7 @@ const {
 } = require("../helper/HandlerError.js");
 const sequelize = require("sequelize");
 const { paginator } = require("../helper/Pagination.js");
-const { searchWhere } = require("../helper/Search.js");
+const { searchWhere, searchWhereCheck } = require("../helper/Search.js");
 const { Op } = require("sequelize");
 const { accesToken } = require("../helper/chekAccessToken.js");
 
@@ -110,6 +110,20 @@ class PatientController {
       });
     } catch (error) {
       handlerError(res, error);
+    }
+  }
+  static async chekPatient(req,res){
+    try {
+      const {nik, date_birth} = req.query
+      if(!nik || !date_birth){
+        return res.status(500).json({ code:500, msg: "Please Inser nik and date_birth !" });
+      }
+      const whereClause = {where : searchWhereCheck(nik, date_birth, "nik", "date_birth")}
+      await Patient.findAll(whereClause).then(data=>{
+        handleGet(res,data.length)
+      })
+    } catch (error) {
+      handlerError(res,error)
     }
   }
   // static async detailPatient(req, res) {

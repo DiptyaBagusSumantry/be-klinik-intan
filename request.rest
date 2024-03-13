@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhZmI1NDBmLTNlN2ItNDMwYS1iYTUyLTIyY2I0OWY0ODE2OCIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxMDIyNTY0MywiZXhwIjoxNzEwNTcxMjQzfQ.AOw9mEfGRyMmB3Lgs3oBzPg8ljKIZ5dtYkY48GXkvoE
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhZmI1NDBmLTNlN2ItNDMwYS1iYTUyLTIyY2I0OWY0ODE2OCIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxMDI4NDE0NiwiZXhwIjoxNzEwNjI5NzQ2fQ.oY4nxL-dzY2Km67t9rhn1P2EEsz9bYAz88mSkSeyaFk
 
 ###
 POST http://localhost:5005/register
@@ -54,6 +54,18 @@ GET http://localhost:5005/patient
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
+//chek patient by nik and date_birth IF old patient
+###
+GET http://localhost:5005/check-patient?&nik=1234567891236457&date_birth=2024-01-01
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//update user_id patient ==> belum
+###
+PUT http://localhost:5005/userId-patient/:id
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
 ###
 POST http://localhost:5005/reservation
 Authorization: Bearer {{token}}
@@ -79,7 +91,7 @@ GET http://localhost:5005/reservation
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-//Detail Patient ==> ADMIN USER
+//Detail Reservation ==> ADMIN USER
 ###
 GET http://localhost:5005/reservation/3d3d349a-5876-4ac9-b71e-1166bed134df
 Authorization: Bearer {{token}}
@@ -88,5 +100,26 @@ Content-Type: application/json
 //LIST reservation by patient Id ==> ONLY USER
 ###
 GET http://localhost:5005/reservation-patient/2a819895-8e06-4eb0-ada4-baad60b76b18
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+POST http://localhost:5005/service
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   "code": "CBTG1", 
+   "name": "Cabut Gigi", 
+   "price": "100000"
+}
+ 
+###
+GET http://localhost:5005/service
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+GET http://localhost:5005/transaction
 Authorization: Bearer {{token}}
 Content-Type: application/json

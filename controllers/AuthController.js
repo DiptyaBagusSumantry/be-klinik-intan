@@ -79,25 +79,6 @@ class AuthController {
       handlerError(res, error);
     }
   }
-
-  static async Logout(req, res) {
-    try {
-      const authHeader = req.headers["authorization"];
-      const token = authHeader && authHeader.split(" ")[1];
-
-      jwt.verify(
-        token,
-        process.env.REFRESH_TOKEN_SECRET,
-        async (error, decoded) => {
-          if (error) return res.sendStatus(403);
-          res.clearCookie("refreshToken");
-          return res.status(200).json({ msg: "Berhasil Logout" });
-        }
-      );
-    } catch (error) {
-      handlerError(res, error);
-    }
-  }
 }
 
 module.exports = AuthController;
