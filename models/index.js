@@ -5,7 +5,7 @@ const Patient = require("./PatientModels.js");
 const Reservation = require("./ReservationModels.js");
 const Transaction = require("./TransactionModels.js");
 const Service = require("./ServiceModels.js");
-const Role = require("./RoleModels.js")
+const Role = require("./RoleModels.js");
 
 const sequelizeInstance = new Sequelize(
   dbConfig.DB,
@@ -31,16 +31,16 @@ db.Patient = Patient(sequelizeInstance);
 db.Reservation = Reservation(sequelizeInstance);
 db.Transaction = Transaction(sequelizeInstance);
 db.Service = Service(sequelizeInstance);
-db.Role = Role(sequelizeInstance)
+db.Role = Role(sequelizeInstance);
 
 //Role - User
 db.Role.hasMany(db.User, {
-    foreignKey: {
-        name: 'roleId',
-        type: Sequelize.UUID,
-        allowNull: false
-    }
-})
+  foreignKey: {
+    name: "roleId",
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
 
 db.User.belongsTo(db.Role, {
   targetKey: "id",
@@ -48,12 +48,13 @@ db.User.belongsTo(db.Role, {
 
 //User - Patient
 db.User.hasMany(db.Patient, {
-    foreignKey: {
-        name: 'userId',
-        type: Sequelize.UUID,
-        allowNull: false
-    }
-})
+  foreignKey: {
+    name: "userId",
+    type: Sequelize.UUID,
+    allowNull: false,
+    unique: true,
+  },
+});
 
 db.Patient.belongsTo(db.User, {
   targetKey: "id",
@@ -61,33 +62,29 @@ db.Patient.belongsTo(db.User, {
 
 //Patient - Reservation
 db.Patient.hasMany(db.Reservation, {
-    foreignKey: {
-        name: 'patientId',
-        type: Sequelize.UUID,
-        allowNull: false
-    }
-})
+  foreignKey: {
+    name: "patientId",
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
 
 db.Reservation.belongsTo(db.Patient, {
   targetKey: "id",
 });
 
-
 //Transaction - Reservation
 db.Reservation.hasOne(db.Transaction, {
-    foreignKey: {
-        name: 'reservationId',
-        type: Sequelize.UUID,
-        allowNull: false
-    }
-})
+  foreignKey: {
+    name: "reservationId",
+    type: Sequelize.UUID,
+    allowNull: false,
+    unique: true,
+  },
+});
 
 db.Transaction.belongsTo(db.Reservation, {
   targetKey: "id",
 });
-
-
-
-
 
 module.exports = db;

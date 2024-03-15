@@ -61,24 +61,24 @@ class AuthController {
     }
   }
 
-  static async register(req, res) {
-    try {
-      const { username, password, fullname, phone, email } = req.body;
-      const role = await Models.Role.findOne({where: {name: "user"}})
+  // static async register(req, res) {
+  //   try {
+  //     const { username, password, fullname, phone, email } = req.body;
+  //     const role = await Models.Role.findOne({where: {name: "user"}})
       
-      await Models.User.create({
-        username,
-        password,
-        fullname,
-        phone,
-        email,
-        roleId: role.id,
-      });
-      handleCreate(res);
-    } catch (error) {
-      handlerError(res, error);
-    }
-  }
+  //     await Models.User.create({
+  //       username,
+  //       password,
+  //       fullname,
+  //       phone,
+  //       email,
+  //       roleId: role.id,
+  //     });
+  //     handleCreate(res);
+  //   } catch (error) {
+  //     handlerError(res, error);
+  //   }
+  // }
 }
 
 module.exports = AuthController;

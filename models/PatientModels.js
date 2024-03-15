@@ -55,20 +55,20 @@ const Patient = (sequelizeInstance) => {
           },
         },
       },
-      fullname: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Fullname Can't be Null!",
-          },
-          notEmpty: {
-            args: true,
-            msg: "Fullname Can't be Empty!",
-          },
-        },
-      },
+      // fullname: {
+      //   type: Sequelize.STRING,
+      //   allowNull: false,
+      //   validate: {
+      //     notNull: {
+      //       args: true,
+      //       msg: "Fullname Can't be Null!",
+      //     },
+      //     notEmpty: {
+      //       args: true,
+      //       msg: "Fullname Can't be Empty!",
+      //     },
+      //   },
+      // },
       place_birth: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -143,32 +143,32 @@ const Patient = (sequelizeInstance) => {
           },
         },
       },
-      phone: {
-        type: Sequelize.STRING,
-        unique: {
-          args: "phone",
-          msg: "Phone Already Registered!",
-        },
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Phone Can't be Null",
-          },
-          notEmpty: {
-            args: true,
-            msg: "Phone Can't be Empty",
-          },
-          isNumeric: {
-            args: true,
-            msg: "Phone Must be Number",
-          },
-          len: {
-            args: [10, 15],
-            msg: "Phone Must be 10 - 15 Number!",
-          },
-        },
-      },
+    //   phone: {
+    //     type: Sequelize.STRING,
+    //     unique: {
+    //       args: "phone",
+    //       msg: "Phone Already Registered!",
+    //     },
+    //     allowNull: false,
+    //     validate: {
+    //       notNull: {
+    //         args: true,
+    //         msg: "Phone Can't be Null",
+    //       },
+    //       notEmpty: {
+    //         args: true,
+    //         msg: "Phone Can't be Empty",
+    //       },
+    //       isNumeric: {
+    //         args: true,
+    //         msg: "Phone Must be Number",
+    //       },
+    //       len: {
+    //         args: [10, 15],
+    //         msg: "Phone Must be 10 - 15 Number!",
+    //       },
+    //     },
+    //   },
     },
     {
       freezeTableName: true,

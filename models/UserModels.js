@@ -119,14 +119,10 @@ const User = (sequelizeInstance) => {
           },
         },
       },
-      refreshToken: {
-        type: Sequelize.STRING,
-        default: null,
-      },
     },
     {
       freezeTableName: true,
-      paranoid: true,
+      // paranoid: true,
       underscored: true,
       //don't show password
       defaultScope: {

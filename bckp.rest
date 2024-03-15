@@ -1,24 +1,34 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwMzhkYmNhLTQwODEtNDNjZC1hMmZjLWZkNTAxYWI1OWJjOCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNzEwNDY5NDA3LCJleHAiOjE3MTA4MTUwMDd9.ZruFdIr05G72_8txYP7Rr9Wxlxhopmj1bQvZF-Orrec
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE5Y2IxNzFhLWYzZTUtNDQxNi1hZTk1LTRkYzhiYjE3YjVlMCIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNzEwNDY2Nzk4LCJleHAiOjE3MTA4MTIzOTh9.x-kR3SAtQzhDtF4ZhFGZ48JDQ7zce8_5NxQ8BqLkFgI
+# ###
+# POST http://localhost:5005/register
+# Content-Type: application/json
 
-//register patient
+# {
+#     "username": "user",
+#     "password": "User1234!",
+#     "fullname": "user",
+#     "phone": "08123456783",
+#     "email": "user@gmail.com"
+# }
+
 ###
 POST http://localhost:5005/patient
 Content-Type: application/json
 
 {
-    "nik": "1234567891236997",
-    "fullname": "Patient 1",
-    "place_birth": "Patient 1",
+    "nik": "1234567891236497",
+    "fullname": "Patient 2",
+    "place_birth": "Patient 2",
     "date_birth": "2024-03-12",
-    "gender": "Patient 1",
-    "address": "Patient 1",
-    "work": "Patient 1",
+    "gender": "Patient 2",
+    "address": "Patient 2",
+    "work": "Patient 2",
     "phone": "01234568921",
-    "username": "patient1",
+    "username": "patient3",
     "password": "User1234!",
-    "fullname": "patient1",
-    "phone": "08123845681",
-    "email": "user1@gmail.com"
+    "fullname": "patient3",
+    "phone": "08123845683",
+    "email": "user4@gmail.com"
 }
 
 ###
@@ -26,14 +36,20 @@ POST http://localhost:5005/login
 Content-Type: application/json
 
 {
-    "username" : "patient3",
-    "password" : "User1234!"
+    "username" : "user",
+    "password" : "Admin1234!"
 }
 
 ###
 GET http://localhost:5005/fetch
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
+
+# ###
+# GET http://localhost:5005/user
+# Authorization: Bearer {{token}}
+# Content-Type: application/json
 
 //Get ALL Patient
 ###
@@ -49,17 +65,23 @@ Content-Type: application/json
 
 //chek patient by nik and date_birth IF old patient
 ###
-GET http://localhost:5005/check-patient?&nik=1234567891236997&date_birth=2024-03-12
+GET http://localhost:5005/check-patient?&nik=1234567891236457&date_birth=2024-03-12
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
+# //update user_id patient ==> belum ==> ROlE USER
+# ###
+# PUT http://localhost:5005/userId-patient/e6179ed4-3ca0-4cf6-8d1f-ab8b0cb6a6f2
+# Authorization: Bearer {{token}}
+# Content-Type: application/json
+
 ###
-PUT http://localhost:5005/patient/d0854d8a-e586-4877-abd2-45e46e1116b6
+PUT http://localhost:5005/patient/da02f73d-eeba-4371-b6ac-d601f46b611b
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "nik": "1234567891236997",
+    "nik": "1234567891236497",
     "fullname": "Bagus 1",
     "place_birth": "Banyumas",
     "date_birth": "2024-03-12",
@@ -78,7 +100,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "date": "2025-03-11",
+    "date": "2024-03-11",
     "diagnosis": "klinik gigi",
     "service": [{
         "name": "periksa gigi",
@@ -98,9 +120,15 @@ Content-Type: application/json
 
 //Detail Reservation by Patient
 ###
-GET http://localhost:5005/reservation/2783ef0a-2ae2-4199-b20b-b989d518e4a1
+GET http://localhost:5005/reservation/eb3cf0d5-1c57-4e03-9858-55ae70c2fb23
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
+# //LIST reservation by patient Id ==> ONLY USER
+# ###
+# GET http://localhost:5005/reservation-patient/a9cb171a-f3e5-4416-ae95-4dc8bb17b5e0
+# Authorization: Bearer {{token}}
+# Content-Type: application/json
 
 ###
 POST http://localhost:5005/service

@@ -38,7 +38,7 @@ async function IsUser(req, res, next) {
         return decoded;
       }
     );
-    if (user.role !== "User") {
+    if (user.role !== "Patient") {
       return res.status(403).json({ msg: `Your role is not allowed!` });
     } else {
       next();

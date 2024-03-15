@@ -5,7 +5,7 @@ class AdminSeeders {
     try {
       const data = await Models.Role.bulkCreate([
         { name: "Admin" },
-        { name: "User" },
+        { name: "Patient" },
       ]);
       await Models.User.create({
         username: "Admin",
