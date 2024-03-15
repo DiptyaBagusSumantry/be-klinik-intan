@@ -68,7 +68,7 @@ class PatientController {
       if(error.errors){
         await Models.User.destroy({
           where: {
-            id: patientId,
+            id: patientId ? patientId: "",
           },
         })
       }

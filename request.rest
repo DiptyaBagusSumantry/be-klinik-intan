@@ -6,7 +6,7 @@ POST http://localhost:5005/patient
 Content-Type: application/json
 
 {
-    "nik": "1234567891236997",
+    "nik": "1234567821236497",
     "fullname": "Patient 1",
     "place_birth": "Patient 1",
     "date_birth": "2024-03-12",
@@ -14,11 +14,11 @@ Content-Type: application/json
     "address": "Patient 1",
     "work": "Patient 1",
     "phone": "01234568921",
-    "username": "patient1",
+    "username": "patient4",
     "password": "User1234!",
     "fullname": "patient1",
     "phone": "08123845681",
-    "email": "user1@gmail.com"
+    "email": "user2@gmail.com"
 }
 
 ###
