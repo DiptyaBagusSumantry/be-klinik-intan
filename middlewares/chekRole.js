@@ -25,7 +25,7 @@ async function IsAdmin(req, res, next) {
     return res.status(500).json({ msg: `roleChecker:\n ${error.message}` });
   }
 }
-async function IsUser(req, res, next) {
+async function IsPatient(req, res, next) {
   try {
      const authHeader = req.headers["authorization"];
      const token = authHeader && authHeader.split(" ")[1];
@@ -38,7 +38,7 @@ async function IsUser(req, res, next) {
         return decoded;
       }
     );
-    if (user.role !== "Patient") {
+    if (user.role !== "patient") {
       return res.status(403).json({ msg: `Your role is not allowed!` });
     } else {
       next();
@@ -48,4 +48,4 @@ async function IsUser(req, res, next) {
   }
 }
 
-module.exports = { IsAdmin, IsUser };
+module.exports = { IsAdmin, IsPatient };

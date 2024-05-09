@@ -46,19 +46,19 @@ db.User.belongsTo(db.Role, {
   targetKey: "id",
 });
 
-//User - Patient
-db.User.hasMany(db.Patient, {
-  foreignKey: {
-    name: "userId",
-    type: Sequelize.UUID,
-    allowNull: false,
-    unique: true,
-  },
-});
+// //User - Patient
+// db.User.hasMany(db.Patient, {
+//   foreignKey: {
+//     name: "userId",
+//     type: Sequelize.UUID,
+//     allowNull: false,
+//     unique: true,
+//   },
+// });
 
-db.Patient.belongsTo(db.User, {
-  targetKey: "id",
-});
+// db.Patient.belongsTo(db.User, {
+//   targetKey: "id",
+// });
 
 //Patient - Reservation
 db.Patient.hasMany(db.Reservation, {

@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 
-function accesToken(req) {
+function accesToken(req,res) {
    const authHeader = req.headers["authorization"];
    const token = authHeader && authHeader.split(" ")[1];
-    
+    // console.log(token)
   const accesToken = jwt.verify(
     token,
     process.env.REFRESH_TOKEN_SECRET,

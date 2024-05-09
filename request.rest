@@ -1,33 +1,36 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImMwMzhkYmNhLTQwODEtNDNjZC1hMmZjLWZkNTAxYWI1OWJjOCIsInJvbGUiOiJQYXRpZW50IiwiaWF0IjoxNzEwNDY5NDA3LCJleHAiOjE3MTA4MTUwMDd9.ZruFdIr05G72_8txYP7Rr9Wxlxhopmj1bQvZF-Orrec
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNGZkNGYyLTcwN2EtNDAyZC1hODg1LWJmMTg5YTAzMTZmMyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNTI0MTEzMSwiZXhwIjoxNzE1NTg2NzMxfQ.uaCPLWCkjcqvaApQlLd6wGSqD03jcGfmAKJg-Fe64Oo
 
 //register patient
 ###
-POST http://localhost:5005/patient
+POST http://localhost:5005/register-patient
 Content-Type: application/json
 
 {
     "nik": "1234567821236497",
     "fullname": "Patient 1",
-    "place_birth": "Patient 1",
     "date_birth": "2024-03-12",
     "gender": "Patient 1",
     "address": "Patient 1",
     "work": "Patient 1",
-    "phone": "01234568921",
-    "username": "patient4",
-    "password": "User1234!",
-    "fullname": "patient1",
-    "phone": "08123845681",
-    "email": "user2@gmail.com"
+    "phone": "01234568921"
 }
 
 ###
-POST http://localhost:5005/login
+POST http://localhost:5005/admin/login
 Content-Type: application/json
 
 {
-    "username" : "patient3",
-    "password" : "User1234!"
+    "username" : "admin",
+    "password" : "Admin1234!"
+}
+
+###
+POST http://localhost:5005/patient/login
+Content-Type: application/json
+
+{
+    "no_rm" : "000001",
+    "nik" : "1234567821236497"
 }
 
 ###

@@ -2,8 +2,8 @@ const { check, validationResult } = require("express-validator");
 
 function validationCreatePatient() {
   return [
-    check('username').notEmpty().withMessage("Username Can't be Null"),
-    check('password').notEmpty().withMessage("password Can't be Null"),
+    // check('username').notEmpty().withMessage("Username Can't be Null"),
+    // check('password').notEmpty().withMessage("password Can't be Null"),
     check('fullname').notEmpty().withMessage("fullname Can't be Null"),
     check("email").isEmail().withMessage("Email tidak valid."),
     check("phone")

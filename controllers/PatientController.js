@@ -14,21 +14,10 @@ const { accesToken } = require("../helper/chekAccessToken.js");
 
 class PatientController {
   static async createPatient(req, res) {
-    let patientId
+    let patientId;
     try {
-      const {
-        nik,
-        place_birth,
-        date_birth,
-        gender,
-        address,
-        work,
-        username,
-        password,
-        fullname,
-        phone,
-        email,
-      } = req.body;
+      const { nik, date_birth, gender, address, work, fullname, phone } =
+        req.body;
 
       //no_rm
       let countPatient = await Patient.findAll({
@@ -42,35 +31,25 @@ class PatientController {
       });
       const numberRm = parseInt(countPatient[0].no_rm) + 1;
       const no_rm = String(numberRm).padStart(6, "0");
-      const role = await Models.Role.findOne({ where: { name: "Patient" } });
-      await Models.User.create({
-        username,
-        password,
+      
+      await Patient.create({
+        no_rm,
+        nik,
+        date_birth,
+        gender,
+        address,
+        work,
         fullname,
-        phone,
-        email,
-        roleId: role.id,
-      }).then(async (data) => {
-        patientId = data.id
-        await Patient.create({
-          no_rm,
-          nik,
-          place_birth,
-          date_birth,
-          gender,
-          address,
-          work,
-          userId: data.id,
-        });
-        return handleCreate(res);
+        phone
       });
+      return handleCreate(res);
     } catch (error) {
-      if(error.errors){
+      if (error.errors) {
         await Models.User.destroy({
           where: {
-            id: patientId ? patientId: "",
+            id: patientId ? patientId : "",
           },
-        })
+        });
       }
       handlerError(res, error);
     }
@@ -78,7 +57,7 @@ class PatientController {
   static async getPatient(req, res) {
     try {
       const { page, search, sorting } = req.query;
-      let whereClause = { where: {}, include: {model: Models.User} };
+      let whereClause = { where: {}, include: { model: Models.User } };
       //sorting
       whereClause.order = [["no_rm", sorting ? sorting : "ASC"]];
 
@@ -95,22 +74,10 @@ class PatientController {
       await Patient.findAll(whereClause).then((data) => {
         // return res.send(data)
         const results = data.map((patient) => {
-          const {
-            no_rm,
-            nik,
-            place_birth,
-            date_birth,
-            gender,
-            address,
-            work,
-          } = patient.dataValues;
-          const {
-            id,
-            username,
-            fullname,
-            phone,
-            email,
-          } = patient.dataValues.user;
+          const { no_rm, nik, place_birth, date_birth, gender, address, work } =
+            patient.dataValues;
+          const { id, username, fullname, phone, email } =
+            patient.dataValues.user;
 
           return {
             id,
@@ -127,10 +94,13 @@ class PatientController {
             email,
           };
         });
-        if (token.role != "Patient"){
-          return handleGetPaginator(res, paginator(results, page ? page : 1, 20))
+        if (token.role != "Patient") {
+          return handleGetPaginator(
+            res,
+            paginator(results, page ? page : 1, 20)
+          );
         }
-          handleGet(res, results[0]);
+        handleGet(res, results[0]);
       });
     } catch (error) {
       handlerError(res, error);
@@ -146,19 +116,17 @@ class PatientController {
       }
       const whereClause = {
         where: searchWhereCheck(nik, date_birth, "nik", "date_birth"),
-        include: {model: Models.User}
+        include: { model: Models.User },
       };
       await Patient.findOne(whereClause).then((patient) => {
-        if(!patient){
-          return res
-            .status(404)
-            .json({ code: 404, msg: "Data Not Found!" });
+        if (!patient) {
+          return res.status(404).json({ code: 404, msg: "Data Not Found!" });
         }
         const { no_rm, nik, place_birth, date_birth, gender, address, work } =
           patient.dataValues;
         const { id, username, fullname, phone, email } =
           patient.dataValues.user;
-        const data =  {
+        const data = {
           id,
           no_rm,
           nik,
@@ -200,15 +168,15 @@ class PatientController {
   static async detailPatient(req, res) {
     try {
       await Patient.findOne({
-        where: {id: req.params.id},
-        include: {model: Models.User}
+        where: { id: req.params.id },
+        include: { model: Models.User },
       }).then((patient) => {
         const { no_rm, nik, place_birth, date_birth, gender, address, work } =
           patient.dataValues;
         const { id, username, fullname, phone, email } =
           patient.dataValues.user;
 
-        const data =  {
+        const data = {
           id,
           no_rm,
           nik,
@@ -230,7 +198,7 @@ class PatientController {
   }
   static async updatePatient(req, res) {
     try {
-      const token =  accesToken(req)
+      const token = accesToken(req);
       const {
         nik,
         fullname,
@@ -244,10 +212,13 @@ class PatientController {
         email,
       } = req.body;
       const userId = req.params.id;
-      if(token.id != userId && token.role != "Admin"){
-         return res
-           .status(500)
-           .json({ code: 500, msg: "No Acces Update by id, Please chek Your Id!" });
+      if (token.id != userId && token.role != "Admin") {
+        return res
+          .status(500)
+          .json({
+            code: 500,
+            msg: "No Acces Update by id, Please chek Your Id!",
+          });
       }
       await Models.User.update(
         {
