@@ -6,13 +6,13 @@ POST http://localhost:5005/register-patient
 Content-Type: application/json
 
 {
-    "nik": "1234567821236497",
+    "nik": "1234567821249097",
     "fullname": "Patient 1",
     "date_birth": "2024-03-12",
     "gender": "Patient 1",
     "address": "Patient 1",
     "work": "Patient 1",
-    "phone": "01234568921"
+    "phone": "01234056821"
 }
 
 ###
@@ -40,13 +40,19 @@ Content-Type: application/json
 
 //Get ALL Patient
 ###
-GET http://localhost:5005/patient
+GET http://localhost:5005/patient?search=&sorting=ASC
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 //Get Detail Patient
 ###
-GET http://localhost:5005/patient/5f142fb7-34c7-432c-8aae-a57d1705cd8c
+GET http://localhost:5005/patient/5aae3738-def0-4054-85d4-324041e9150d
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//Get Detail Patient
+###
+DELETE  http://localhost:5005/patient/5aae3738-def0-4054-85d4-324041e9150d
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -57,22 +63,18 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ###
-PUT http://localhost:5005/patient/d0854d8a-e586-4877-abd2-45e46e1116b6
+PUT http://localhost:5005/patient/5aae3738-def0-4054-85d4-324041e9150d
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "nik": "1234567891236997",
-    "fullname": "Bagus 1",
-    "place_birth": "Banyumas",
-    "date_birth": "2024-03-12",
-    "gender": "Oke Gas",
-    "address": "Oke Gas",
-    "work": "Oke Gas",
-    "phone": "01234568921",
-    "username": "pasien2",
-    "phone": "08123456783",
-    "email": "pasien2@gmail.com"
+    "nik": "1234567821236497",
+    "fullname": "dicoba",
+    "date_birth": "2024-03-15",
+    "gender": "dicoba 1",
+    "address": "dicoba 1",
+    "work": "dicoba 1",
+    "phone": "0123456891"
 }
 
 ###

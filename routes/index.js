@@ -29,11 +29,17 @@ router.get(
 router.put(
   "/patient/:id",
   verifyToken,
-  validationUpdatePatient(),
+  // validationUpdatePatient(),
   PatientController.updatePatient
 );
 // router.put("/userId-patient/:id", verifyToken, IsUser,PatientController.updateUserId);
 router.get("/check-patient", verifyToken, PatientController.chekPatient);
+router.delete(
+  "/patient/:id",
+  verifyToken,
+  IsAdmin,
+  PatientController.deletePatient
+);
 
 router.post(
   "/reservation",

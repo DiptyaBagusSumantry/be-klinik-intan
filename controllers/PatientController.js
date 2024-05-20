@@ -75,9 +75,8 @@ class PatientController {
 
       const getPatient = await Patient.findAll(whereClause);
 
-      
       const token = accesToken(req);
-      console.log(token.role)
+      console.log(token.role);
       if (token.role != "patient") {
         return handleGetPaginator(
           res,
@@ -185,29 +184,32 @@ class PatientController {
     try {
       await Patient.findOne({
         where: { id: req.params.id },
-        include: { model: Models.User },
-      }).then((patient) => {
-        const { no_rm, nik, place_birth, date_birth, gender, address, work } =
-          patient.dataValues;
-        const { id, username, fullname, phone, email } =
-          patient.dataValues.user;
+        // include: { model: Models.User },
+      }).then(result=>{
+        handleGet(res, result);
+      })
+      // .then((patient) => {
+      //   const { no_rm, nik, place_birth, date_birth, gender, address, work } =
+      //     patient.dataValues;
+      //   const { id, username, fullname, phone, email } =
+      //     patient.dataValues.user;
 
-        const data = {
-          id,
-          no_rm,
-          nik,
-          fullname,
-          place_birth,
-          date_birth,
-          gender,
-          address,
-          work,
-          phone,
-          username,
-          email,
-        };
-        handleGet(res, data);
-      });
+      //   const data = {
+      //     id,
+      //     no_rm,
+      //     nik,
+      //     fullname,
+      //     place_birth,
+      //     date_birth,
+      //     gender,
+      //     address,
+      //     work,
+      //     phone,
+      //     username,
+      //     email,
+      //   };
+      //   handleGet(res, data);
+      // });
     } catch (error) {
       handlerError / (res, error);
     }
@@ -216,62 +218,83 @@ class PatientController {
     try {
       const token = accesToken(req);
       const {
+        // nik,
+        // fullname,
+        // place_birth,
+        // date_birth,
+        // gender,
+        // address,
+        // work,
+        // phone,
+        // username,
+        // email,
         nik,
-        fullname,
-        place_birth,
         date_birth,
         gender,
         address,
         work,
+        fullname,
         phone,
-        username,
-        email,
       } = req.body;
-      const userId = req.params.id;
-      if (token.id != userId && token.role != "Admin") {
-        return res.status(500).json({
-          code: 500,
-          msg: "No Acces Update by id, Please chek Your Id!",
-        });
-      }
-      await Models.User.update(
+      // const id = req.params.id;
+      // console.log(id)
+      const data = await Patient.update(
         {
-          username,
+          nik,
+          date_birth,
+          gender,
+          address,
+          work,
           fullname,
-          phone,
-          email,
+          phone
         },
-        { where: { id: userId } }
-      ).then(async (data) => {
-        await Patient.update(
-          {
-            nik,
-            place_birth,
-            date_birth,
-            gender,
-            address,
-            work,
-          },
-          { where: { user_id: userId } }
-        );
-        handleUpdate(res, data);
-      });
+        { where: { id: req.params.id } }
+      );
+      handleUpdate(res, data);
+      // if (token.id != userId && token.role != "Admin") {
+      //   return res.status(500).json({
+      //     code: 500,
+      //     msg: "No Acces Update by id, Please chek Your Id!",
+      //   });
+      // }
+      // await Models.User.update(
+      //   {
+      //     username,
+      //     fullname,
+      //     phone,
+      //     email,
+      //   },
+      //   { where: { id: userId } }
+      // ).then(async (data) => {
+      // const data = await Patient.update(
+      //   {
+      //     nik,
+      //     place_birth,
+      //     date_birth,
+      //     gender,
+      //     address,
+      //     work,
+      //   },
+      //   { where: { id } }
+      // );
+      // handleUpdate(res, data);
+      // });
     } catch (error) {
       handlerError(res, error);
     }
   }
-  // static async deletePatient(req, res) {
-  //   try {
-  //     const deleteData = await Patient.destroy({
-  //       where: {
-  //         id: req.params.id,
-  //       },
-  //     });
-  //     handleDelete(res, deleteData);
-  //   } catch (error) {
-  //     handlerError(res, error);
-  //   }
-  // }
+  static async deletePatient(req, res) {
+    try {
+      const deleteData = await Patient.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+      handleDelete(res, deleteData);
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
 }
 
 module.exports = PatientController;
