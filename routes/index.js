@@ -20,6 +20,8 @@ router.post("/patient/login", AuthController.LoginPatient);
 router.get("/fetch", verifyToken, AuthController.Fetch);
 
 router.get("/amount-dashboard", verifyToken, IsAdmin, UserController.amountDashboard);
+router.get("/role", verifyToken, IsAdmin, UserController.getRole);
+router.post("/user-management", verifyToken, IsAdmin, UserController.createUser);
 
 router.get("/patient", verifyToken, PatientController.getPatient);
 router.get(
@@ -54,7 +56,7 @@ router.get(
   ReservationController.getDetailReservation
 );
 
-// router.get("/user", verifyToken, IsAdmin, UserController.getUser);
+router.get("/user", verifyToken, IsAdmin, UserController.getUser);
 router.get("/reservation", verifyToken, ReservationController.getReservation);
 router.post("/service", verifyToken, IsAdmin, ServiceController.createService);
 router.get("/service", verifyToken, ServiceController.getService);

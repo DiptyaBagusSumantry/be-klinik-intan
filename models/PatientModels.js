@@ -51,7 +51,7 @@ const Patient = (sequelizeInstance) => {
           },
           isNumeric: {
             args: true,
-            msg: "Phone Must be Number",
+            msg: "NIK Must be Number",
           },
         },
       },
