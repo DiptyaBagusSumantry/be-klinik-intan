@@ -31,7 +31,7 @@ class PatientController {
       });
       const numberRm = parseInt(countPatient[0].no_rm) + 1;
       const no_rm = String(numberRm).padStart(6, "0");
-      
+
       await Patient.create({
         no_rm,
         nik,
@@ -40,7 +40,7 @@ class PatientController {
         address,
         work,
         fullname,
-        phone
+        phone,
       });
       return handleCreate(res);
     } catch (error) {
@@ -57,7 +57,10 @@ class PatientController {
   static async getPatient(req, res) {
     try {
       const { page, search, sorting } = req.query;
-      let whereClause = { where: {}, include: { model: Models.User } };
+      let whereClause = {
+        where: {},
+        // include: { model: Models.User }
+      };
       //sorting
       whereClause.order = [["no_rm", sorting ? sorting : "ASC"]];
 
@@ -66,42 +69,55 @@ class PatientController {
         whereClause.where = searchWhere(search, "fullname", "phone");
       }
 
+      // if (token.role != "Admin") {
+      //   whereClause.where.user_id = token.id;
+      // }
+
+      const getPatient = await Patient.findAll(whereClause);
+
+      
       const token = accesToken(req);
-      if (token.role != "Admin") {
-        whereClause.where.user_id = token.id;
+      console.log(token.role)
+      if (token.role != "patient") {
+        return handleGetPaginator(
+          res,
+          paginator(getPatient, page ? page : 1, 20)
+        );
       }
+      handleGet(res, getPatient);
 
-      await Patient.findAll(whereClause).then((data) => {
-        // return res.send(data)
-        const results = data.map((patient) => {
-          const { no_rm, nik, place_birth, date_birth, gender, address, work } =
-            patient.dataValues;
-          const { id, username, fullname, phone, email } =
-            patient.dataValues.user;
+      // .then((data) => {
+      //   // return res.send(data)
+      //   const results = data.map((patient) => {
+      //     // const { no_rm, nik, place_birth, date_birth, gender, address, work } =
+      //     //   patient.dataValues;
+      //     // const { id, username, fullname, phone, email } =
+      //     //   patient.dataValues.user;
+      //     // const {id, no_rm, nik, fullname, date_birth, gender}
 
-          return {
-            id,
-            no_rm,
-            nik,
-            fullname,
-            place_birth,
-            date_birth,
-            gender,
-            address,
-            work,
-            phone,
-            username,
-            email,
-          };
-        });
-        if (token.role != "Patient") {
-          return handleGetPaginator(
-            res,
-            paginator(results, page ? page : 1, 20)
-          );
-        }
-        handleGet(res, results[0]);
-      });
+      //     return {
+      //       id,
+      //       no_rm,
+      //       nik,
+      //       fullname,
+      //       place_birth,
+      //       date_birth,
+      //       gender,
+      //       address,
+      //       work,
+      //       phone,
+      //       username,
+      //       email,
+      //     };
+      //   });
+      //   if (token.role != "Patient") {
+      //     return handleGetPaginator(
+      //       res,
+      //       paginator(results, page ? page : 1, 20)
+      //     );
+      //   }
+      //   handleGet(res, results[0]);
+      // });
     } catch (error) {
       handlerError(res, error);
     }
@@ -213,12 +229,10 @@ class PatientController {
       } = req.body;
       const userId = req.params.id;
       if (token.id != userId && token.role != "Admin") {
-        return res
-          .status(500)
-          .json({
-            code: 500,
-            msg: "No Acces Update by id, Please chek Your Id!",
-          });
+        return res.status(500).json({
+          code: 500,
+          msg: "No Acces Update by id, Please chek Your Id!",
+        });
       }
       await Models.User.update(
         {
