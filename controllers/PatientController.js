@@ -76,7 +76,7 @@ class PatientController {
       const getPatient = await Patient.findAll(whereClause);
 
       const token = accesToken(req);
-      console.log(token.role);
+      // console.log(token.role);
       if (token.role != "patient") {
         return handleGetPaginator(
           res,

@@ -38,6 +38,12 @@ GET http://localhost:5005/fetch
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
+//Mount Dashboard
+###
+GET http://localhost:5005/amount-dashboard
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
 //Get ALL Patient
 ###
 GET http://localhost:5005/patient?search=&sorting=ASC
@@ -46,7 +52,7 @@ Content-Type: application/json
 
 //Get Detail Patient
 ###
-GET http://localhost:5005/patient/5aae3738-def0-4054-85d4-324041e9150d
+GET http://localhost:5005/patient/d533ce0f-de4b-4e48-8733-ed25b5b79b2a
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

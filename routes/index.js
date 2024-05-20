@@ -19,6 +19,8 @@ router.post("/patient/login", AuthController.LoginPatient);
 // router.post("/register", AuthController.register);
 router.get("/fetch", verifyToken, AuthController.Fetch);
 
+router.get("/amount-dashboard", verifyToken, IsAdmin, UserController.amountDashboard);
+
 router.get("/patient", verifyToken, PatientController.getPatient);
 router.get(
   "/patient/:id",
