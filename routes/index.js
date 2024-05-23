@@ -8,6 +8,7 @@ const TransactionController = require("../controllers/TransactionController.js")
 const { IsAdmin, IsPatient } = require("../middlewares/chekRole.js");
 const UserController = require("../controllers/UserController.js");
 const ServiceController = require("../controllers/ServiceController.js");
+const MedicalRecordController = require("../controllers/MedicalRecordController.js")
 const {
   validationCreatePatient,
   validationUpdatePatient,
@@ -22,6 +23,12 @@ router.get("/fetch", verifyToken, AuthController.Fetch);
 router.get("/amount-dashboard", verifyToken, IsAdmin, UserController.amountDashboard);
 router.get("/role", verifyToken, IsAdmin, UserController.getRole);
 router.post("/user-management", verifyToken, IsAdmin, UserController.createUser);
+
+
+router.post("/medical-record", verifyToken, IsAdmin, MedicalRecordController.createMedicalRecord);
+
+
+
 
 router.get("/patient", verifyToken, PatientController.getPatient);
 router.get(

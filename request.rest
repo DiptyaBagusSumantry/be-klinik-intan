@@ -109,6 +109,30 @@ GET http://localhost:5005/user?page=1&search=&sorting=DESC
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
+//Create Medical Record
+###
+POST http://localhost:5005/medical-Record
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "patientId": "7e29826f-071f-4fd8-9115-bf53d49053b3",
+    "pelayanan": "oke",
+    "keluhan": "oke",
+    "diagnosa": "oke",
+    "tindakan": "oke",
+    "biaya": {
+        "layanan": "100.000",
+        "obat": "50.000"
+        //Bisa disi key lebih banyak  misal ada tambahan pajak, biaya admin, diskon dll
+    },
+    "total": "150.000" // total dari biaya
+}
+
+
+
+
+
 
 
 

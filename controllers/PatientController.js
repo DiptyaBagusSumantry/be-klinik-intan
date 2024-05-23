@@ -203,7 +203,7 @@ class PatientController {
     try {
       await Patient.findOne({
         where: { id: req.params.id },
-        // include: { model: Models.User },
+        include: { model: Models.MedicalRecord },
       }).then((result) => {
         handleGet(res, result);
       });
