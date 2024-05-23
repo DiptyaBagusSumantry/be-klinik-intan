@@ -155,6 +155,21 @@ const Patient = (sequelizeInstance) => {
           },
         },
       },
+      statusPerkawinan: {
+        type: Sequelize.STRING
+      },
+      agama: {
+        type: Sequelize.STRING
+      },
+      riwayatAlergiObat: {
+        type: Sequelize.STRING
+      },
+      riwayatAlergiMakanan: {
+        type: Sequelize.STRING
+      },
+      riwayatAlergiLainya: {
+        type: Sequelize.STRING
+      },
     },
     {
       freezeTableName: true,

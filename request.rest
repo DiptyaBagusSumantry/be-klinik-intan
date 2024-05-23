@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViNGZkNGYyLTcwN2EtNDAyZC1hODg1LWJmMTg5YTAzMTZmMyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjIxNjQ3OCwiZXhwIjoxNzE2NTYyMDc4fQ.Ru0meRuRxVkYwb4BuEJTTMxN3FUklJzxlRrJPybMIRU
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ4NjJiNjhkLWM4YmQtNGUwZC1iNDQzLTkzYjVhY2NlNzhkYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjQ0MjE1OSwiZXhwIjoxNzE2Nzg3NzU5fQ.K_q991c1upULsl79wJdktUZbNLq2QyatAWlv1GJHXx8
 
 //register patient
 ###
@@ -6,13 +6,18 @@ POST http://localhost:5005/register-patient
 Content-Type: application/json
 
 {
-    "nik": "1234567821249097",
+    "nik": "1234567821249095",
     "fullname": "Patient 1",
     "date_birth": "2024-03-12",
     "gender": "Patient 1",
     "address": "Patient 1",
     "work": "Patient 1",
-    "phone": "0123405768201"
+    "phone": "012340576201",
+    "statusPerkawinan": "",
+    "agama": "",
+    "riwayatAlergiObat": "",
+    "riwayatAlergiMakanan": "",
+    "riwayatAlergiLainya": ""
 }
 
 ###
@@ -52,13 +57,13 @@ Content-Type: application/json
 
 //Get Detail Patient
 ###
-GET http://localhost:5005/patient/d533ce0f-de4b-4e48-8733-ed25b5b79b2a
+GET http://localhost:5005/patient/7e29826f-071f-4fd8-9115-bf53d49053b3
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 //update pasien
 ###
-PUT http://localhost:5005/patient/5aae3738-def0-4054-85d4-324041e9150d
+PUT http://localhost:5005/patient/7e29826f-071f-4fd8-9115-bf53d49053b3
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -69,7 +74,12 @@ Content-Type: application/json
     "gender": "dicoba 1",
     "address": "dicoba 1",
     "work": "dicoba 1",
-    "phone": "0123456891"
+    "phone": "0123456891",
+    "statusPerkawinan": "single",
+    "agama": "islam",
+    "riwayatAlergiObat": "tidak",
+    "riwayatAlergiMakanan": "tidak",
+    "riwayatAlergiLainya": "tidak"
 }
 
 //Get Role

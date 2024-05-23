@@ -16,8 +16,20 @@ class PatientController {
   static async createPatient(req, res) {
     let patientId;
     try {
-      const { nik, date_birth, gender, address, work, fullname, phone } =
-        req.body;
+      const {
+        nik,
+        date_birth,
+        gender,
+        address,
+        work,
+        fullname,
+        phone,
+        statusPerkawinan,
+        agama,
+        riwayatAlergiObat,
+        riwayatAlergiMakanan,
+        riwayatAlergiLainya,
+      } = req.body;
 
       //no_rm
       let countPatient = await Patient.findAll({
@@ -41,6 +53,13 @@ class PatientController {
         work,
         fullname,
         phone,
+        statusPerkawinan: statusPerkawinan ? statusPerkawinan : null,
+        agama: agama ? agama : null,
+        riwayatAlergiObat: riwayatAlergiObat ? riwayatAlergiObat : null,
+        riwayatAlergiMakanan: riwayatAlergiMakanan
+          ? riwayatAlergiMakanan
+          : null,
+        riwayatAlergiLainya: riwayatAlergiLainya ? riwayatAlergiLainya : null,
       });
       return handleCreate(res);
     } catch (error) {
@@ -185,9 +204,9 @@ class PatientController {
       await Patient.findOne({
         where: { id: req.params.id },
         // include: { model: Models.User },
-      }).then(result=>{
+      }).then((result) => {
         handleGet(res, result);
-      })
+      });
       // .then((patient) => {
       //   const { no_rm, nik, place_birth, date_birth, gender, address, work } =
       //     patient.dataValues;
@@ -235,6 +254,11 @@ class PatientController {
         work,
         fullname,
         phone,
+        statusPerkawinan,
+        agama,
+        riwayatAlergiObat,
+        riwayatAlergiMakanan,
+        riwayatAlergiLainya,
       } = req.body;
       // const id = req.params.id;
       // console.log(id)
@@ -246,7 +270,14 @@ class PatientController {
           address,
           work,
           fullname,
-          phone
+          phone,
+          statusPerkawinan: statusPerkawinan ? statusPerkawinan : null,
+          agama: agama ? agama : null,
+          riwayatAlergiObat: riwayatAlergiObat ? riwayatAlergiObat : null,
+          riwayatAlergiMakanan: riwayatAlergiMakanan
+            ? riwayatAlergiMakanan
+            : null,
+          riwayatAlergiLainya: riwayatAlergiLainya ? riwayatAlergiLainya : null,
         },
         { where: { id: req.params.id } }
       );
