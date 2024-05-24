@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ4NjJiNjhkLWM4YmQtNGUwZC1iNDQzLTkzYjVhY2NlNzhkYSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjQ0MjE1OSwiZXhwIjoxNzE2Nzg3NzU5fQ.K_q991c1upULsl79wJdktUZbNLq2QyatAWlv1GJHXx8
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzNmI0ODFjLTVkYTktNDdhYi1hM2EzLWNhZjE5ZDJjN2NjOCIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjU2NTkyMSwiZXhwIjoxNzE2OTExNTIxfQ.mw6CS5-czRwONW2a20vqcXx0PPtd__Uswws270VRQtc
 
 //register patient
 ###
@@ -57,13 +57,13 @@ Content-Type: application/json
 
 //Get Detail Patient
 ###
-GET http://localhost:5005/patient/7e29826f-071f-4fd8-9115-bf53d49053b3
+GET http://localhost:5005/patient/7d1a8b12-3842-4a85-8b91-4585fece2c7a
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 //update pasien
 ###
-PUT http://localhost:5005/patient/7e29826f-071f-4fd8-9115-bf53d49053b3
+PUT http://localhost:5005/patient/b671ea6c-c25d-4c31-9f29-51469d97361a
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -109,28 +109,64 @@ GET http://localhost:5005/user?page=1&search=&sorting=DESC
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-//Create Medical Record
+//Create Rekam Medis
 ###
 POST http://localhost:5005/medical-Record
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "7e29826f-071f-4fd8-9115-bf53d49053b3",
+    "patientId": "7d1a8b12-3842-4a85-8b91-4585fece2c7a",
+    //ngambil patinetId dari endpoint get ALL patientId. di ui tampilkan nama. di request pake id
     "pelayanan": "oke",
-    "keluhan": "oke",
-    "diagnosa": "oke",
-    "tindakan": "oke",
-    "biaya": {
-        "layanan": "100.000",
-        "obat": "50.000"
-        //Bisa disi key lebih banyak  misal ada tambahan pajak, 
-        //biaya admin, diskon dll
-    },
-    "total": "150.000" // total dari biaya
+    "keluhan": "oke", 
+    // keluhan yang diraskan
+    "diagnosa": "oke", 
+    //hasil analiysis dokter, termasuk penyakit dalam katagori apa
+    "tindakan": "oke", 
+    // tindakan yang dilakukan dokter dengan memberikan obat apa aja
+    "biayaLayanan": 50000,
+    "biayaObat": 10200,
+    "statusPembayaran": "LUNAS"
 }
 
+//GET REKAM MEDIS
+###
+GET http://localhost:5005/medical-record?sorting=&search=
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
+//Update Rekam Medis
+###
+PUT http://localhost:5005/medical-Record/8d0a5b11-8b5b-4b94-a4cf-c69f6959c4e0
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "patientId": "b671ea6c-c25d-4c31-9f29-51469d97361a",
+    "pelayanan": "oke sip",
+    "keluhan": "oke sip", 
+    // keluhan yang diraskan
+    "diagnosa": "oke sip", 
+    //hasil analiysis dokter, termasuk penyakit dalam katagori apa
+    "tindakan": "oke sip", 
+    // tindakan yang dilakukan dokter dengan memberikan obat apa aja
+    "biayaLayanan": 10500,
+    "biayaObat": 10200,
+    "statusPembayaran": "BELUM LUNAS"
+    // jika biaya layanan, biaya obat, status pembayaran diupdate maka transaksi juga akan diupdate
+}
+
+//GET TRANSACTION
+//Transaction hanya dapat get dan get detail
+// untuk update dan create dihandle sama endpoint rekam medis 
+// berikaitan antara tindakan yaitu isi obat dan biayaObat
+// jika tindakan dirubah maka biaya obat juga akan berubah
+// Jadi menyebabkan biaya transaksi juga berubah
+###
+GET http://localhost:5005/transaction
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
 
 
@@ -182,11 +218,6 @@ Content-Type: application/json
  
 ###
 GET http://localhost:5005/service
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
-###
-GET http://localhost:5005/transaction
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

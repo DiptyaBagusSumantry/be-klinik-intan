@@ -1,12 +1,9 @@
 const Models = require("../models/index");
-const Reservation = Models.Reservation;
-const Patient = Models.Patient;
 const Transaction = Models.Transaction;
 const {
   handlerError,
   handleUpdate,
   handleGetPaginator,
-
 } = require("../helper/HandlerError.js");
 const { paginator } = require("../helper/Pagination.js");
 const { searchWhere } = require("../helper/Search.js");
@@ -17,7 +14,10 @@ class TransactionController {
       const { page, search, sorting, invoiceId } = req.query;
       // const invoiceId = req.query.invoiceId;
       const whereClause = {
-        // include: { model: Patient },
+        include: {
+          model: Models.MedicalRecord,
+          include: { model: Models.Patient },
+        },
       };
       //sorting
       whereClause.order = [["createdAt", sorting ? sorting : "DESC"]];
@@ -37,7 +37,8 @@ class TransactionController {
       const results = getInvoice.map((data) => {
         let { id, invoice, total_payment, status, purchased, createdAt } =
           data.dataValues;
-        // const { fullname } = data.dataValues.patient;
+        const fullname =
+          data.dataValues.medical_record.dataValues.patient.fullname;
         createdAt = new Date(createdAt).toLocaleDateString("id-ID", {
           day: "2-digit",
           month: "long",
@@ -46,10 +47,10 @@ class TransactionController {
         return {
           id,
           invoice,
+          fullname,
           total_payment,
           status,
           createdAt,
-          // fullname,
           purchased: JSON.parse(purchased),
         };
       });

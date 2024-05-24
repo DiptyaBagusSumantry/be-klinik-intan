@@ -25,7 +25,9 @@ router.get("/role", verifyToken, IsAdmin, UserController.getRole);
 router.post("/user-management", verifyToken, IsAdmin, UserController.createUser);
 
 
-router.post("/medical-record", verifyToken, IsAdmin, MedicalRecordController.createMedicalRecord);
+router.post("/medical-record", verifyToken,  MedicalRecordController.createMedicalRecord);
+router.get("/medical-record", verifyToken,  MedicalRecordController.getMedicalRecord);
+router.put("/medical-record/:id", verifyToken,  MedicalRecordController.updateMedicalRecord);
 
 
 

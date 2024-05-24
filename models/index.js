@@ -103,17 +103,16 @@ db.Reservation.belongsTo(db.Patient, {
   targetKey: "id",
 });
 
-//Transaction - Reservation
-db.Reservation.hasOne(db.Transaction, {
+//Transaction - Medical
+db.MedicalRecord.hasOne(db.Transaction, {
   foreignKey: {
-    name: "reservationId",
+    name: "medicalRecordId",
     type: Sequelize.UUID,
-    allowNull: false,
-    unique: true,
+    allowNull: false
   },
 });
 
-db.Transaction.belongsTo(db.Reservation, {
+db.Transaction.belongsTo(db.MedicalRecord, {
   targetKey: "id",
 });
 
