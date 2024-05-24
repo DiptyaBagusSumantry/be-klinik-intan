@@ -124,7 +124,8 @@ Content-Type: application/json
     "biaya": {
         "layanan": "100.000",
         "obat": "50.000"
-        //Bisa disi key lebih banyak  misal ada tambahan pajak, biaya admin, diskon dll
+        //Bisa disi key lebih banyak  misal ada tambahan pajak, 
+        //biaya admin, diskon dll
     },
     "total": "150.000" // total dari biaya
 }
