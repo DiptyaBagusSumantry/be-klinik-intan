@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzNmI0ODFjLTVkYTktNDdhYi1hM2EzLWNhZjE5ZDJjN2NjOCIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjU2NTkyMSwiZXhwIjoxNzE2OTExNTIxfQ.mw6CS5-czRwONW2a20vqcXx0PPtd__Uswws270VRQtc
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxNDc0ODQ2LTJjMTItNGU3My05OTRhLWRlMjcxZWVmZjA2ZSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjYyMzkwMSwiZXhwIjoxNzE2OTY5NTAxfQ.nDKkKOYsjgMRCTrcL1iqaNt1LDQssSrQqYBh1PfbK9o
 
 //register patient
 ###
@@ -57,13 +57,13 @@ Content-Type: application/json
 
 //Get Detail Patient
 ###
-GET http://localhost:5005/patient/7d1a8b12-3842-4a85-8b91-4585fece2c7a
+GET http://localhost:5005/patient/90b60f1b-88e8-478a-989b-602d29f09791
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 //update pasien
 ###
-PUT http://localhost:5005/patient/b671ea6c-c25d-4c31-9f29-51469d97361a
+PUT http://localhost:5005/patient/90b60f1b-88e8-478a-989b-602d29f09791
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -100,7 +100,7 @@ Content-Type: application/json
     "password": "Dokter1234!",
     "phone": "0867572732873",
     "email": "dokter@gmail.com",
-    "roleId": "15616da0-a94d-4147-bc05-e8a910c487be"
+    "roleId": "b3190fc1-5d23-497f-893f-8f64d2877c8b"
 }
 
 //Get User Management
@@ -116,7 +116,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "7d1a8b12-3842-4a85-8b91-4585fece2c7a",
+    "patientId": "90b60f1b-88e8-478a-989b-602d29f09791",
     //ngambil patinetId dari endpoint get ALL patientId. di ui tampilkan nama. di request pake id
     "pelayanan": "oke",
     "keluhan": "oke", 
@@ -133,6 +133,12 @@ Content-Type: application/json
 //GET REKAM MEDIS
 ###
 GET http://localhost:5005/medical-record?sorting=&search=
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//GET Detail REKAM MEDIS
+###
+GET http://localhost:5005/medical-record/ae19f029-a56a-46ce-aa0b-41bdfff153f7
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

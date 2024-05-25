@@ -68,8 +68,8 @@ class MedicalRecord {
         let { id, pelayanan, keluhan, diagnosa, tindakan, createdAt } =
           MedicalRecord.dataValues;
         const { purchased, status } = MedicalRecord.dataValues.transaction;
-        const biayaLayanan = JSON.parse(purchased).biayaLayanan
-        const biayaObat = JSON.parse(purchased).biayaObat
+        const biayaLayanan = JSON.parse(purchased).biayaLayanan;
+        const biayaObat = JSON.parse(purchased).biayaObat;
         createdAt = new Date(createdAt).toLocaleDateString("id-ID", {
           day: "2-digit",
           month: "long",
@@ -87,7 +87,7 @@ class MedicalRecord {
           createdAt,
           biayaLayanan,
           biayaObat,
-          statusPembayran: status
+          statusPembayran: status,
         };
       });
 
@@ -134,6 +134,20 @@ class MedicalRecord {
         }
       );
       return handleUpdate(res, updateTransactioon);
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async detailMedicalRecord(req, res) {
+    try {
+      await MedicalRecords.findOne({
+        where: {
+          id: req.params.id,
+        },
+        include: [{ model: Models.Patient }, { model: Models.Transaction }],
+      }).then((result) => {
+        handleGet(res, result);
+      });
     } catch (error) {
       handlerError(res, error);
     }
