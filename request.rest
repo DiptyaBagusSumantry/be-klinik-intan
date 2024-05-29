@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxNDc0ODQ2LTJjMTItNGU3My05OTRhLWRlMjcxZWVmZjA2ZSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjYyMzkwMSwiZXhwIjoxNzE2OTY5NTAxfQ.nDKkKOYsjgMRCTrcL1iqaNt1LDQssSrQqYBh1PfbK9o
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxNDc0ODQ2LTJjMTItNGU3My05OTRhLWRlMjcxZWVmZjA2ZSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjk3ODc5MywiZXhwIjoxNzE3MzI0MzkzfQ.z5uY5ih4PMFQa-cNWmEQcK8TZrE8o2OoQMhXOZ5Gnuw
 
 //register patient
 ###
@@ -105,9 +105,23 @@ Content-Type: application/json
 
 //Get User Management
 ###
-GET http://localhost:5005/user?page=1&search=&sorting=DESC
+GET http://localhost:5005/user-management?page=1&search=&sorting=DESC
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
+//Get Detail User Management
+###
+GET http://localhost:5005/user-management/ecff5d6c-1a44-4063-a746-0eeb7d2432ab
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//DeletelUser Management
+###
+DELETE  http://localhost:5005/user-management/b1474846-2c12-4e73-994a-de271eeff06e
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
 
 //Create Rekam Medis
 ###
@@ -173,12 +187,6 @@ Content-Type: application/json
 GET http://localhost:5005/transaction
 Authorization: Bearer {{token}}
 Content-Type: application/json
-
-
-
-
-
-
 
 
 ###

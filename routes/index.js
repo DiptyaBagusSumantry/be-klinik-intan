@@ -23,6 +23,9 @@ router.get("/fetch", verifyToken, AuthController.Fetch);
 router.get("/amount-dashboard", verifyToken, IsAdmin, UserController.amountDashboard);
 router.get("/role", verifyToken, IsAdmin, UserController.getRole);
 router.post("/user-management", verifyToken, IsAdmin, UserController.createUser);
+router.get("/user-management", verifyToken, IsAdmin, UserController.getUser);
+router.get("/user-management/:id", verifyToken, IsAdmin, UserController.getUserById);
+router.delete("/user-management/:id", verifyToken, IsAdmin, UserController.deleteUser);
 
 
 router.post("/medical-record", verifyToken,  MedicalRecordController.createMedicalRecord);
@@ -66,7 +69,7 @@ router.get(
   ReservationController.getDetailReservation
 );
 
-router.get("/user", verifyToken, IsAdmin, UserController.getUser);
+
 router.get("/reservation", verifyToken, ReservationController.getReservation);
 router.post("/service", verifyToken, IsAdmin, ServiceController.createService);
 router.get("/service", verifyToken, ServiceController.getService);
