@@ -94,15 +94,24 @@ class JadwalDokterController {
 
       //searching
       if (search) {
-        whereClause.where = searchWhere(
-          search,
-          "nama_dokter",
-          "poli"
-        );
+        whereClause.where = searchWhere(search, "nama_dokter", "poli");
       }
 
       await JadwalDR.findAll(whereClause).then((result) => {
         return handleGetPaginator(res, paginator(result, page ? page : 1, 20));
+      });
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async getDetailJadwalDokter(req, res) {
+    try {
+      await JadwalDR.findOne({
+        where: {
+          id: req.params.id,
+        },
+      }).then((result) => {
+        handleGet(res, result);
       });
     } catch (error) {
       handlerError(res, error);

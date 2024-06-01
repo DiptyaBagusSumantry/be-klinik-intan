@@ -93,6 +93,11 @@ router.get(
   verifyToken,
   JadwalDokterController.getJadwalDokter
 );
+router.get(
+  "/jadwal-dokter/:id",
+  verifyToken,
+  JadwalDokterController.getDetailJadwalDokter
+);
 router.delete(
   "/jadwal-dokter/:id",
   verifyToken,

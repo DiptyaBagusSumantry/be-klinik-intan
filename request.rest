@@ -279,6 +279,13 @@ GET http://localhost:5005/jadwal-dokter?page=&search=&sorting=
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
+//GET Detail Jadwal Dokter
+// searching by namaDokter and poli
+###
+GET http://localhost:5005/jadwal-dokter/cc9616ac-3eff-45ff-a210-ab0943f48bf8
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
 //UPDATE JADWAL DOKTER
 ###
 PUT http://localhost:5005/jadwal-dokter/f02fcd77-58e6-4288-abff-6da0673d12f5
