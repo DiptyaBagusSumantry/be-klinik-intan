@@ -5,6 +5,7 @@ const {
   handleGetPaginator,
   handleCreate,
   handleDelete,
+  handleUpdate,
 } = require("../helper/HandlerError.js");
 const { paginator } = require("../helper/Pagination.js");
 const { searchWhere } = require("../helper/Search.js");
@@ -51,6 +52,27 @@ class UserController {
         roleId,
       }).then((result) => {
         handleCreate(res);
+      });
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async updateUser(req, res) {
+    try {
+      const { fullname, username, password, phone, email, roleId } = req.body;
+      await Models.User.update({
+        fullname,
+        username,
+        password,
+        phone,
+        email,
+        roleId,
+      },{
+        where: {
+          id: req.params.id
+        }
+      }).then((result) => {
+        handleUpdate(res, result);
       });
     } catch (error) {
       handlerError(res, error);
@@ -117,13 +139,13 @@ class UserController {
           return handlerError(res, {message: "Please chek Id!"});
         }
       });
-      // await User.destroy({
-      //   where: {
-      //     id: req.params.id,
-      //   },
-      // }).then((result) => {
-      //   handleDelete(res, result);
-      // });
+      await User.destroy({
+        where: {
+          id: req.params.id,
+        },
+      }).then((result) => {
+        handleDelete(res, result);
+      });
     } catch (error) {
       handlerError(res, error);
     }

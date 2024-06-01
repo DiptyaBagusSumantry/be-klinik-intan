@@ -57,7 +57,7 @@ Content-Type: application/json
 
 //Get Detail Patient
 ###
-GET http://localhost:5005/patient/90b60f1b-88e8-478a-989b-602d29f09791
+GET http://localhost:5005/patient/b671ea6c-c25d-4c31-9f29-51469d97361a
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -109,15 +109,30 @@ GET http://localhost:5005/user-management?page=1&search=&sorting=DESC
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
+//Update User Management
+###
+PUT  http://localhost:5005/user-management/ecff5d6c-1a44-4063-a746-0eeb7d2432ab
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "fullname": "Dokter X",
+    "username": "dokter X",
+    "password": "Dokter1234!X",
+    "phone": "0867572732871",
+    "email": "dokter@gmail.comX",
+    "roleId": "b3190fc1-5d23-497f-893f-8f64d2877c8b"
+}
+
 //Get Detail User Management
 ###
 GET http://localhost:5005/user-management/ecff5d6c-1a44-4063-a746-0eeb7d2432ab
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-//DeletelUser Management
+//Deletel User Management
 ###
-DELETE  http://localhost:5005/user-management/b1474846-2c12-4e73-994a-de271eeff06e
+DELETE  http://localhost:5005/user-management/ecff5d6c-1a44-4063-a746-0eeb7d2432ab
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -158,21 +173,21 @@ Content-Type: application/json
 
 //Update Rekam Medis
 ###
-PUT http://localhost:5005/medical-Record/8d0a5b11-8b5b-4b94-a4cf-c69f6959c4e0
+PUT http://localhost:5005/medical-Record/ae19f029-a56a-46ce-aa0b-41bdfff153f7
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "b671ea6c-c25d-4c31-9f29-51469d97361a",
-    "pelayanan": "oke sip",
-    "keluhan": "oke sip", 
+    "patientId": "90b60f1b-88e8-478a-989b-602d29f09791",
+    "pelayanan": "oke sip x",
+    "keluhan": "oke sip x", 
     // keluhan yang diraskan
-    "diagnosa": "oke sip", 
+    "diagnosa": "oke sip x", 
     //hasil analiysis dokter, termasuk penyakit dalam katagori apa
-    "tindakan": "oke sip", 
+    "tindakan": "oke sip x", 
     // tindakan yang dilakukan dokter dengan memberikan obat apa aja
-    "biayaLayanan": 10500,
-    "biayaObat": 10200,
+    "biayaLayanan": 11000,
+    "biayaObat": 9000,
     "statusPembayaran": "BELUM LUNAS"
     // jika biaya layanan, biaya obat, status pembayaran diupdate maka transaksi juga akan diupdate
 }
@@ -188,7 +203,10 @@ GET http://localhost:5005/transaction
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-
+// Create Reservation
+// jika role patient yang create ngga perlu patientId
+// jika role admin yang create perlu patientId
+// patient id diambil dari get patient ketika ada di dashboard admin
 ###
 POST http://localhost:5005/reservation
 Authorization: Bearer {{token}}
@@ -196,26 +214,19 @@ Content-Type: application/json
 
 {
     "date": "2025-03-11",
-    "diagnosis": "klinik gigi",
-    "service": [{
-        "name": "periksa gigi",
-        "price": "50000"
-    },{
-        "name": "tambal gigi",
-        "price": "10000"
-    }],
-    "user_id": ""
+    "jadwalDokterId": "cc9616ac-3eff-45ff-a210-ab0943f48bf8",
+    "pembayaran": "umum",
+    "patientId": "90b60f1b-88e8-478a-989b-602d29f09791"
 }
 
-//LIST ALL RESERVATION ==> ONLY ADMIN 
 ###
-GET http://localhost:5005/reservation
+GET http://localhost:5005/reservation?page=&search=&=&sorting=
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-//Detail Reservation by Patient
+//Detail Reservation
 ###
-GET http://localhost:5005/reservation/2783ef0a-2ae2-4199-b20b-b989d518e4a1
+GET http://localhost:5005/reservation/053b48f7-dcd7-4427-aeeb-cab8e1f3065b
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -238,5 +249,52 @@ Content-Type: application/json
 //chek patient by nik and date_birth IF old patient
 ###
 GET http://localhost:5005/check-patient?&nik=1234567891236997&date_birth=2024-03-12
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//GET DOKTER
+###
+GET http://localhost:5005/dokter
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//CREATE JADWAL DOKTER
+###
+POST http://localhost:5005/jadwal-dokter
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "namaDokter": "Dokter",
+    "poli": "gigi",
+    "hariKerja": "selasa",
+    "jamMulai": "08:30",
+    "jamSelesai": "16:30"
+}
+
+//GET Jadwal Dokter
+// searching by namaDokter and poli
+###
+GET http://localhost:5005/jadwal-dokter?page=&search=&sorting=
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//UPDATE JADWAL DOKTER
+###
+PUT http://localhost:5005/jadwal-dokter/f02fcd77-58e6-4288-abff-6da0673d12f5
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "namaDokter": "Dokter y",
+    "poli": "gigi z",
+    "hariKerja": "selasa y",
+    "jamMulai": "08:45",
+    "jamSelesai": "16:15"
+}
+
+//Delete Jadwal Dokter
+###
+DELETE  http://localhost:5005/jadwal-dokter/e4251d5d-b02e-49ea-9f9c-66473dc6dd68
 Authorization: Bearer {{token}}
 Content-Type: application/json

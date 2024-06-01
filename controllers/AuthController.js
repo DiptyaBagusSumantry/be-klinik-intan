@@ -38,6 +38,7 @@ class AuthController {
       res.status(200).json({
         accessToken: accessToken,
         role: user.role.name,
+        fullname: user.fullname,
       });
     } catch (error) {
       handlerError(res, error);
@@ -81,6 +82,7 @@ class AuthController {
       res.status(200).json({
         accessToken: accessToken,
         role: "Patient",
+        fullname: patient.fullname,
       });
     } catch (error) {
       handlerError(res, error);

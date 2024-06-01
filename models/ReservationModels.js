@@ -29,34 +29,6 @@ const reservation = (sequelizeInstance) => {
           },
         },
       },
-      diagnosis: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Diagnosis Can't be Null!",
-          },
-          notEmpty: {
-            args: true,
-            msg: "Diagnosis Can't be Empty!",
-          },
-        },
-      },
-      service: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "Service Can't be Null!",
-          },
-          notEmpty: {
-            args: true,
-            msg: "Service Can't be Empty!",
-          },
-        },
-      },
       queue: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -68,6 +40,20 @@ const reservation = (sequelizeInstance) => {
           notEmpty: {
             args: true,
             msg: "Queue Can't be Empty!",
+          },
+        },
+      },
+      pembayaran: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Pembayaran Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Pembayaran Can't be Empty!",
           },
         },
       },

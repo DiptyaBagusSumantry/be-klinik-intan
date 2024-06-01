@@ -103,6 +103,19 @@ db.Reservation.belongsTo(db.Patient, {
   targetKey: "id",
 });
 
+//Reservation - Jadwal Dokter
+db.jadwalDokter.hasMany(db.Reservation, {
+  foreignKey: {
+    name: "jadwalDokterId",
+    type: Sequelize.UUID,
+    allowNull: false,
+  },
+});
+
+db.Reservation.belongsTo(db.jadwalDokter, {
+  targetKey: "id",
+});
+
 //Transaction - Medical
 db.MedicalRecord.hasOne(db.Transaction, {
   foreignKey: {

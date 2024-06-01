@@ -46,6 +46,7 @@ class TransactionController {
         });
         return {
           id,
+          idRekamMedis: data.dataValues.medical_record.dataValues.id,
           invoice,
           fullname,
           total_payment,

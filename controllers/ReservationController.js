@@ -16,25 +16,18 @@ const { accesToken } = require("../helper/chekAccessToken.js");
 class ReservationController {
   static async createReservation(req, res) {
     try {
-      const { date, diagnosis, service, user_id } = req.body;
+      const { date, pembayaran, jadwalDokterId, patientId } = req.body;
       const userId = accesToken(req);
-      if (userId.role != "Patient" && !user_id) {
+      // let patientId
+      console.log(userId);
+      if (userId.role != "Patient" && !patientId) {
         return res.status(500).json({
           code: 500,
-          msg: "Your Role is Admin, Please insert user_id!",
+          msg: "Your Role not Patient, Please insert patientId!",
         });
       }
-      const patientId = await Patient.findOne({
-        where: { user_id: userId.id },
-      });
-      // a9cb171a-f3e5-4416-ae95-4dc8bb17b5e0
-      let total_payment = 0;
-      service.forEach((element) => {
-        total_payment += parseInt(element.price);
-      });
-      if (isNaN(total_payment)) {
-        const err = { message: "price must be integer" };
-        return handlerError(res, err);
+      if (userId.role == "Admin") {
+        userId.id = patientId;
       }
 
       //queue
@@ -52,10 +45,10 @@ class ReservationController {
 
       await Reservation.create({
         date,
-        diagnosis,
+        pembayaran,
+        jadwalDokterId,
+        patientId,
         queue,
-        service: JSON.stringify(service),
-        patientId: patientId.id,
       });
 
       handleCreate(res);
@@ -65,9 +58,12 @@ class ReservationController {
   }
   static async getReservation(req, res) {
     try {
-      const token = accesToken(req);
+      const userId = accesToken(req);
       const { page, search, sorting } = req.query;
-      let whereClause = { include: { model: Patient }, where: {} };
+      let whereClause = {
+        include: [{ model: Patient }, { model: Models.jadwalDokter }],
+        where: {},
+      };
       //sorting
       whereClause.order = [["createdAt", sorting ? sorting : "DESC"]];
 
@@ -76,43 +72,34 @@ class ReservationController {
         whereClause.where = searchWhere(search, "queue", "date");
       }
 
-      const patient = await Patient.findOne({
-        where: { user_id: token.id },
-        include: {model: Models.User}
-      })
-
-      //otorisasi user
-      if (token.role != "Admin") {
-          whereClause.where.patientId = patient.id
-
+      if (userId.role != "Admin") {
+        whereClause.where.patientId = userId.id;
       }
 
       await Reservation.findAll(whereClause).then((get) => {
-        console.log(patient.dataValues.user);
+        // console.log(patient.dataValues.user);
         const results = get.map((data) => {
-          const { id, date, diagnosis, service, queue } = data.dataValues;
+          const { id, date, pembayaran, queue } = data.dataValues;
           const {
-            userId: patientId,
+            id: patientId,
+            fullname,
             no_rm,
             phone,
             gender,
           } = data.dataValues.patient;
-          let hasil = "";
-          const proses = JSON.parse(service);
-          proses.forEach((data) => {
-            hasil += data.name + ", ";
-          });
+          const { namaDokter, poli } = data.dataValues.jadwal_dokter;
           return {
             id,
-            patientId,
             queue,
+            namaDokter,
+            poli,
+            pembayaran,
+            patientId,
             no_rm,
             date,
-            fullname: patient.dataValues.user.fullname,
+            fullname,
             gender,
             phone,
-            hasil,
-            diagnosis,
           };
         });
         handleGetPaginator(res, paginator(results, page ? page : 1, 20));
@@ -123,39 +110,10 @@ class ReservationController {
   }
   static async getDetailReservation(req, res) {
     try {
-      let whereClause = { where: { id: req.params.id } };
-      const token = accesToken(req)
-
-      //otorisasi user
-      if (token.role != "Admin") {
-        await Patient.findOne({
-          where: { user_id: token.id },
-        }).then((res) => {
-          whereClause.where.patientId = res.id
-        });
-      }
-
-      const get = await Reservation.findOne(whereClause);
-      if (!get) {
-        return handleGet(res, []);
-      }
-
-      const { id, queue, diagnosis, date, service } = get.dataValues;
-
-      const tgl = new Date(date).toLocaleDateString("id-ID", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
+      const data = await Reservation.findOne({
+        where: { id: req.params.id },
+        include: [{ model: Patient }, { model: Models.jadwalDokter }],
       });
-
-      const data = {
-        id,
-        queue,
-        date: tgl,
-        diagnosis,
-        service: JSON.parse(service),
-      };
-
       handleGet(res, data);
     } catch (error) {
       handlerError(res, error);
