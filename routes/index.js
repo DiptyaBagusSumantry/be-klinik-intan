@@ -90,7 +90,6 @@ router.put(
 );
 router.get(
   "/jadwal-dokter",
-  verifyToken,
   JadwalDokterController.getJadwalDokter
 );
 router.get(
