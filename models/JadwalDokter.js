@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const moment = require("moment");
 
 const jadwalDokter = (sequelizeInstance) => {
   return sequelizeInstance.define(
@@ -66,6 +67,11 @@ const jadwalDokter = (sequelizeInstance) => {
             msg: "jam mulai tidak boleh kosong!",
           },
         },
+        get() {
+          const time = this.getDataValue("jamMulai");
+          console.log(time);
+          return time ? moment(time, "HH:mm:ss").format("HH:mm") : null;
+        },
       },
       jamSelesai: {
         type: Sequelize.TIME,
@@ -79,6 +85,11 @@ const jadwalDokter = (sequelizeInstance) => {
             args: true,
             msg: "jam selesai tidak boleh kosong!",
           },
+        },
+        get() {
+          const time = this.getDataValue("jamSelesai");
+          console.log(time);
+          return time ? moment(time, "HH:mm:ss").format("HH:mm") : null;
         },
       },
     },

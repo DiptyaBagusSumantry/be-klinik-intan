@@ -12,6 +12,7 @@ const { param } = require("../routes/index.js");
 const { where } = require("sequelize");
 const { paginator } = require("../helper/Pagination.js");
 const { searchWhere } = require("../helper/Search.js");
+const moment = require("moment");
 const JadwalDR = Models.jadwalDokter;
 
 class JadwalDokterController {
@@ -86,7 +87,7 @@ class JadwalDokterController {
   }
   static async getJadwalDokter(req, res) {
     try {
-      const { page, search, sorting } = req.query;
+      let { page, search, sorting, date } = req.query;
       let whereClause = {};
 
       //sorting
@@ -96,9 +97,34 @@ class JadwalDokterController {
       if (search) {
         whereClause.where = searchWhere(search, "nama_dokter", "poli");
       }
-
+      if (!date){
+        date = moment().format('YYYY-MM-DD');
+        console.log(date)
+      }
+      if (date) {
+        const days = [
+          "Minggu",
+          "Senin",
+          "Selasa",
+          "Rabu",
+          "Kamis",
+          "Jumat",
+          "Sabtu",
+        ];
+        const dayIndex = new Date(date).getDay(); // Mendapatkan indeks hari (0 = Minggu, 1 = Senin, dst.)
+        date = days[dayIndex];
+      }
+      // return res.send(date);
       await JadwalDR.findAll(whereClause).then((result) => {
-        return handleGetPaginator(res, paginator(result, page ? page : 1, 20));
+        const data = result.map((item) => {
+          if (date.toLowerCase() != item.hariKerja.toLowerCase()) {
+            item.dataValues.isAvailable = false;
+          } else {
+            item.dataValues.isAvailable = true;
+          }
+          return item.dataValues
+        });
+        return handleGetPaginator(res, paginator(data, page ? page : 1, 20));
       });
     } catch (error) {
       handlerError(res, error);
