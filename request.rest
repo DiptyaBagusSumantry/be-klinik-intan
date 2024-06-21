@@ -275,7 +275,7 @@ Content-Type: application/json
 //GET Jadwal Dokter
 // searching by namaDokter and poli
 ###
-GET http://localhost:5005/jadwal-dokter?page=&search=&sorting=&date=2024-06-19
+GET http://localhost:5005/jadwal-dokter?page=&search=&sorting=&date=2024-06-25
 Content-Type: application/json
 
 //GET Detail Jadwal Dokter

@@ -97,9 +97,9 @@ class JadwalDokterController {
       if (search) {
         whereClause.where = searchWhere(search, "nama_dokter", "poli");
       }
-      if (!date){
-        date = moment().format('YYYY-MM-DD');
-        console.log(date)
+      if (!date) {
+        date = moment().format("YYYY-MM-DD");
+        console.log(date);
       }
       if (date) {
         const days = [
@@ -114,18 +114,22 @@ class JadwalDokterController {
         const dayIndex = new Date(date).getDay(); // Mendapatkan indeks hari (0 = Minggu, 1 = Senin, dst.)
         date = days[dayIndex];
       }
-      // return res.send(date);
-      await JadwalDR.findAll(whereClause).then((result) => {
-        const data = result.map((item) => {
-          if (date.toLowerCase() != item.hariKerja.toLowerCase()) {
-            item.dataValues.isAvailable = false;
-          } else {
-            item.dataValues.isAvailable = true;
-          }
-          return item.dataValues
-        });
-        return handleGetPaginator(res, paginator(data, page ? page : 1, 20));
+
+      const result = await JadwalDR.findAll(whereClause);
+      const data = result.map((item) => {
+        if (date.toLowerCase() != item.hariKerja.toLowerCase()) {
+          item.dataValues.isAvailable = false;
+        } else {
+          item.dataValues.isAvailable = true;
+        }
+        const { jamMulai, jamSelesai } = item.dataValues;
+        return {
+          ...item.dataValues,
+          jamMulai: moment(jamMulai, "HH:mm:ss").format("HH:mm"),
+          jamSelesai: moment(jamSelesai, "HH:mm:ss").format("HH:mm"),
+        };
       });
+      return handleGetPaginator(res, paginator(data, page ? page : 1, 20));
     } catch (error) {
       handlerError(res, error);
     }

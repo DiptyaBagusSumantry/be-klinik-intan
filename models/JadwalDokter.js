@@ -67,11 +67,11 @@ const jadwalDokter = (sequelizeInstance) => {
             msg: "jam mulai tidak boleh kosong!",
           },
         },
-        get() {
-          const time = this.getDataValue("jamMulai");
-          console.log(time);
-          return time ? moment(time, "HH:mm:ss").format("HH:mm") : null;
-        },
+        // get() {
+        //   const time = this.getDataValue("jamMulai");
+        //   console.log(time);
+        //   return time ? moment(time, "HH:mm:ss").format("HH:mm") : null;
+        // },
       },
       jamSelesai: {
         type: Sequelize.TIME,
@@ -86,11 +86,11 @@ const jadwalDokter = (sequelizeInstance) => {
             msg: "jam selesai tidak boleh kosong!",
           },
         },
-        get() {
-          const time = this.getDataValue("jamSelesai");
-          console.log(time);
-          return time ? moment(time, "HH:mm:ss").format("HH:mm") : null;
-        },
+        // get() {
+        //   const time = this.getDataValue("jamSelesai");
+        //   console.log(typeof(time));
+        //   return time ? moment(time, "HH:mm:ss").format("HH:mm") : null;
+        // },
       },
     },
     {
