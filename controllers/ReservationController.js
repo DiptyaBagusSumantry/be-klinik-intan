@@ -16,7 +16,7 @@ const { accesToken } = require("../helper/chekAccessToken.js");
 class ReservationController {
   static async createReservation(req, res) {
     try {
-      const { date, pembayaran, jadwalDokterId, patientId } = req.body;
+      const { date, pembayaran, jadwalDokterId, patientId, jenisPerawatan, keluhan } = req.body;
       const userId = accesToken(req);
       // let patientId
       // console.log(userId);
@@ -57,9 +57,19 @@ class ReservationController {
         jadwalDokterId,
         patientId,
         queue,
+        jenisPerawatan,
+        keluhan,
       });
 
-      handleCreate(res);
+      // handleCreate(res);
+      handleGet(res, {
+        jadwalDokterId,
+        date,
+        pembayaran,
+        patientId,
+        jenisPerawatan,
+        keluhan,
+      });
     } catch (error) {
       handlerError(res, error);
     }

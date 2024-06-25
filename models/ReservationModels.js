@@ -72,6 +72,34 @@ const reservation = (sequelizeInstance) => {
           },
         },
       },
+      jenisPerawatan: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "jenisPerawatan Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "jenisPerawatan Can't be Empty!",
+          },
+        },
+      },
+      keluhan: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Keluhan Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Keluhan Can't be Empty!",
+          },
+        },
+      },
     },
     {
       freezeTableName: true,
