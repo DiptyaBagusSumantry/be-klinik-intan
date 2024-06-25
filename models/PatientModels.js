@@ -129,6 +129,20 @@ const Patient = (sequelizeInstance) => {
           },
         },
       },
+      jenisPerawatan: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "jenisPerawatan Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "jenisPerawatan Can't be Empty!",
+          },
+        },
+      },
       phone: {
         type: Sequelize.STRING,
         unique: {
@@ -156,19 +170,19 @@ const Patient = (sequelizeInstance) => {
         },
       },
       statusPerkawinan: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       agama: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       riwayatAlergiObat: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       riwayatAlergiMakanan: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       riwayatAlergiLainya: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
     },
     {

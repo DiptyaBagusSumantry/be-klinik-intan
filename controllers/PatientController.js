@@ -29,6 +29,7 @@ class PatientController {
         riwayatAlergiObat,
         riwayatAlergiMakanan,
         riwayatAlergiLainya,
+        jenisPerawatan,
       } = req.body;
 
       //no_rm
@@ -53,6 +54,7 @@ class PatientController {
         work,
         fullname,
         phone,
+        jenisPerawatan,
         statusPerkawinan: statusPerkawinan ? statusPerkawinan : null,
         agama: agama ? agama : null,
         riwayatAlergiObat: riwayatAlergiObat ? riwayatAlergiObat : null,
@@ -156,8 +158,16 @@ class PatientController {
         if (!patient) {
           return res.status(404).json({ code: 404, msg: "Data Not Found!" });
         }
-        const { no_rm, nik, place_birth, date_birth, gender, address, work } =
-          patient.dataValues;
+        const {
+          no_rm,
+          nik,
+          place_birth,
+          date_birth,
+          gender,
+          address,
+          work,
+          jenisPerawatan,
+        } = patient.dataValues;
         const { id, username, fullname, phone, email } =
           patient.dataValues.user;
         const data = {
@@ -165,6 +175,7 @@ class PatientController {
           no_rm,
           nik,
           fullname,
+          jenisPerawatan,
           place_birth,
           date_birth,
           gender,
@@ -259,6 +270,7 @@ class PatientController {
         riwayatAlergiObat,
         riwayatAlergiMakanan,
         riwayatAlergiLainya,
+        jenisPerawatan,
       } = req.body;
       // const id = req.params.id;
       // console.log(id)
@@ -270,6 +282,7 @@ class PatientController {
           address,
           work,
           fullname,
+          jenisPerawatan,
           phone,
           statusPerkawinan: statusPerkawinan ? statusPerkawinan : null,
           agama: agama ? agama : null,

@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxNDc0ODQ2LTJjMTItNGU3My05OTRhLWRlMjcxZWVmZjA2ZSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxNjk3ODc5MywiZXhwIjoxNzE3MzI0MzkzfQ.z5uY5ih4PMFQa-cNWmEQcK8TZrE8o2OoQMhXOZ5Gnuw
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIxNDc0ODQ2LTJjMTItNGU3My05OTRhLWRlMjcxZWVmZjA2ZSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxOTMxODkwOSwiZXhwIjoxNzE5NjY0NTA5fQ.h5QAqE1WmHMHoL41Pi8X5P0Tbsaivvq0GDMU97tM5vg
 
 //register patient
 ###
@@ -17,7 +17,8 @@ Content-Type: application/json
     "agama": "",
     "riwayatAlergiObat": "",
     "riwayatAlergiMakanan": "",
-    "riwayatAlergiLainya": ""
+    "riwayatAlergiLainya": "",
+    "jenisPerawatan": "IGD"
 }
 
 ###
@@ -57,7 +58,7 @@ Content-Type: application/json
 
 //Get Detail Patient
 ###
-GET http://localhost:5005/patient/b671ea6c-c25d-4c31-9f29-51469d97361a
+GET http://localhost:5005/patient/90b60f1b-88e8-478a-989b-602d29f09791
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -79,7 +80,8 @@ Content-Type: application/json
     "agama": "islam",
     "riwayatAlergiObat": "tidak",
     "riwayatAlergiMakanan": "tidak",
-    "riwayatAlergiLainya": "tidak"
+    "riwayatAlergiLainya": "tidak",
+    "jenisPerawatan": "IGD"
 }
 
 //Get Role
