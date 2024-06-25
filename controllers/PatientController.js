@@ -28,8 +28,7 @@ class PatientController {
         agama,
         riwayatAlergiObat,
         riwayatAlergiMakanan,
-        riwayatAlergiLainya,
-        jenisPerawatan,
+        riwayatAlergiLainya
       } = req.body;
 
       //no_rm
@@ -54,7 +53,6 @@ class PatientController {
         work,
         fullname,
         phone,
-        jenisPerawatan,
         statusPerkawinan: statusPerkawinan ? statusPerkawinan : null,
         agama: agama ? agama : null,
         riwayatAlergiObat: riwayatAlergiObat ? riwayatAlergiObat : null,
@@ -166,7 +164,6 @@ class PatientController {
           gender,
           address,
           work,
-          jenisPerawatan,
         } = patient.dataValues;
         const { id, username, fullname, phone, email } =
           patient.dataValues.user;
@@ -175,7 +172,6 @@ class PatientController {
           no_rm,
           nik,
           fullname,
-          jenisPerawatan,
           place_birth,
           date_birth,
           gender,
@@ -269,8 +265,7 @@ class PatientController {
         agama,
         riwayatAlergiObat,
         riwayatAlergiMakanan,
-        riwayatAlergiLainya,
-        jenisPerawatan,
+        riwayatAlergiLainya
       } = req.body;
       // const id = req.params.id;
       // console.log(id)
@@ -282,7 +277,6 @@ class PatientController {
           address,
           work,
           fullname,
-          jenisPerawatan,
           phone,
           statusPerkawinan: statusPerkawinan ? statusPerkawinan : null,
           agama: agama ? agama : null,

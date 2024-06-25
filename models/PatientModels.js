@@ -129,20 +129,6 @@ const Patient = (sequelizeInstance) => {
           },
         },
       },
-      jenisPerawatan: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            args: true,
-            msg: "jenisPerawatan Can't be Null!",
-          },
-          notEmpty: {
-            args: true,
-            msg: "jenisPerawatan Can't be Empty!",
-          },
-        },
-      },
       phone: {
         type: Sequelize.STRING,
         unique: {
