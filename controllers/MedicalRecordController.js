@@ -9,6 +9,7 @@ const {
 } = require("../helper/HandlerError.js");
 const { paginator } = require("../helper/Pagination.js");
 const { searchWhere } = require("../helper/Search.js");
+const moment = require("moment");
 
 class MedicalRecord {
   static async createMedicalRecord(req, res) {
@@ -23,6 +24,15 @@ class MedicalRecord {
         patientId,
         statusPembayaran,
       } = req.body;
+      const chekMR = await Models.Reservation.findAll({
+        where: { patientId, date: moment().format("YYYY-MM-DD"), status: true },
+      });
+      if (chekMR.length >0) {
+        return handlerError(res, {
+          message:
+            "Medical record already created in today or patient not yet create reservation in today, please check get medical record! or chek get reservation!",
+        });
+      }
       const biaya = biayaLayanan + biayaObat;
       const dataMR = await MedicalRecords.create({
         pelayanan,
@@ -38,14 +48,18 @@ class MedicalRecord {
         purchased: JSON.stringify({ biayaLayanan, biayaObat }),
         medicalRecordId: dataMR.id,
       });
-      await Models.Reservation.update({
-        status: true
-      },{
-        where: {
-          date: "",
-          queue: req.body.queue
+      await Models.Reservation.update(
+        {
+          status: true,
+        },
+        {
+          where: {
+            patientId: patientId,
+            date: moment().format("YYYY-MM-DD"),
+          },
         }
-      })
+      );
+      console.log(moment().format("YYYY-MM-DD"));
       return handleCreate(res);
     } catch (error) {
       handlerError(res, error);

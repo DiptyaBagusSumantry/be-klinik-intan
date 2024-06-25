@@ -19,7 +19,7 @@ class ReservationController {
       const { date, pembayaran, jadwalDokterId, patientId } = req.body;
       const userId = accesToken(req);
       // let patientId
-      console.log(userId);
+      // console.log(userId);
       if (userId.role != "Patient" && !patientId) {
         return res.status(500).json({
           code: 500,
@@ -28,6 +28,14 @@ class ReservationController {
       }
       if (userId.role == "Admin") {
         userId.id = patientId;
+      }
+
+      //check whether patient already reservation in date
+      const chekPatient = await Reservation.findAll({
+        where: { date, patientId },
+      });
+      if (chekPatient.length >0){
+        return handlerError(res, {message: `Patient alaready reservation in date ${date}. Plesae Chek your reservation!`})
       }
 
       //queue
@@ -79,7 +87,13 @@ class ReservationController {
       await Reservation.findAll(whereClause).then((get) => {
         // console.log(patient.dataValues.user);
         const results = get.map((data) => {
-          const { id, date, pembayaran, queue } = data.dataValues;
+          const {
+            id,
+            date,
+            pembayaran,
+            queue,
+            status: statusPeriksa,
+          } = data.dataValues;
           const {
             id: patientId,
             fullname,
@@ -91,6 +105,7 @@ class ReservationController {
           return {
             id,
             queue,
+            statusPeriksa,
             namaDokter,
             poli,
             pembayaran,
