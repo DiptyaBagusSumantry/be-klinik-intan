@@ -38,6 +38,14 @@ class MedicalRecord {
         purchased: JSON.stringify({ biayaLayanan, biayaObat }),
         medicalRecordId: dataMR.id,
       });
+      await Models.Reservation.update({
+        status: true
+      },{
+        where: {
+          date: "",
+          queue: req.body.queue
+        }
+      })
       return handleCreate(res);
     } catch (error) {
       handlerError(res, error);

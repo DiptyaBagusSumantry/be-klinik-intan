@@ -43,6 +43,21 @@ const reservation = (sequelizeInstance) => {
           },
         },
       },
+      status: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Status Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Status Can't be Empty!",
+          },
+        },
+      },
       pembayaran: {
         type: Sequelize.STRING,
         allowNull: false,

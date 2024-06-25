@@ -100,6 +100,7 @@ class AuthController {
           fetch = {
             username: data.fullname,
             role: user.role,
+            id: user.id,
           };
         });
       } else {
@@ -109,6 +110,7 @@ class AuthController {
           fetch = {
             username: data.username,
             role: user.role,
+            id: user.id,
           };
         });
       }

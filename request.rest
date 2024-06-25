@@ -215,7 +215,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "date": "2025-03-11",
+    "date": "2025-03-12",
     "jadwalDokterId": "cc9616ac-3eff-45ff-a210-ab0943f48bf8",
     "pembayaran": "umum",
     "patientId": "90b60f1b-88e8-478a-989b-602d29f09791"
