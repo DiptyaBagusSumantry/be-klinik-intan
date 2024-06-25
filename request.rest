@@ -215,10 +215,10 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "date": "2025-03-13",
-    "jadwalDokterId": "9fdd3e22-1a8f-4cb9-84e6-0baabaf21b7e",
+    "date": "2025-03-12",
+    "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
     "pembayaran": "umum",
-    "patientId": "ce5ea5c9-3cd4-4257-bc4c-b83200aefc1b",
+    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
     "jenisPerawatan": "IGD", 
     "keluhan": "tidak ada"
 }

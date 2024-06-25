@@ -61,12 +61,17 @@ class ReservationController {
         keluhan,
       });
 
+      const detailPatient = await Models.Patient.findOne({
+        where: {
+          id: patientId
+        }
+      })
       // handleCreate(res);
       handleGet(res, {
         jadwalDokterId,
         date,
         pembayaran,
-        patientId,
+        dataPatient: detailPatient,
         jenisPerawatan,
         keluhan,
       });
