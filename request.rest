@@ -148,9 +148,11 @@ Content-Type: application/json
 
 {
     "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "idReservasi": "297867e2-e12b-42ae-bcae-9c6e9f30eb11",
     //ngambil patinetId dari endpoint get ALL patientId. di ui tampilkan nama. di request pake id
     "pelayanan": "oke",
     "keluhan": "oke", 
+    "kodeDiagnosa": "oke",
     // keluhan yang diraskan
     "diagnosa": "oke", 
     //hasil analiysis dokter, termasuk penyakit dalam katagori apa
@@ -185,6 +187,7 @@ Content-Type: application/json
     "keluhan": "oke sip x", 
     // keluhan yang diraskan
     "diagnosa": "oke sip x", 
+    "kodeDiaagnosa": "mantap",
     //hasil analiysis dokter, termasuk penyakit dalam katagori apa
     "tindakan": "oke sip x", 
     // tindakan yang dilakukan dokter dengan memberikan obat apa aja
@@ -215,7 +218,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "date": "2025-03-12",
+    "date": "2025-03-15",
     "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
     "pembayaran": "umum",
     "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",

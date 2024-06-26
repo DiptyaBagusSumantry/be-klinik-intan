@@ -67,6 +67,20 @@ const MedicalRecord = (sequelizeInstance) => {
           },
         },
       },
+      kode_diagnosa: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Kode Diagnosa tidak boleh null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Kode Diagnosa tidak boleh kosong!",
+          },
+        },
+      },
       tindakan: {
         type: Sequelize.STRING,
         allowNull: false,

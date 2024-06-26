@@ -23,11 +23,23 @@ class MedicalRecord {
         biayaObat,
         patientId,
         statusPembayaran,
+        kodeDiagnosa,
+        idReservasi,
       } = req.body;
-      const chekMR = await Models.Reservation.findAll({
-        where: { patientId, date: moment().format("YYYY-MM-DD"), status: true },
-      });
-      if (chekMR.length >0) {
+      // const chekMR = await Models.Reservation.findAll({
+      //   where: { patientId, date: moment().format("YYYY-MM-DD"), status: true },
+      // });
+      // if (chekMR.length > 0) {
+      //   return handlerError(res, {
+      //     message:
+      //       "Medical record already created in today or patient not yet create reservation in today, please check get medical record! or chek get reservation!",
+      //   });
+      // }
+      // if(!chekMR){}
+      const chekReservation = await Models.Reservation.findOne({
+        where: {id: idReservasi, status: false}
+      })
+      if(!chekReservation){
         return handlerError(res, {
           message:
             "Medical record already created in today or patient not yet create reservation in today, please check get medical record! or chek get reservation!",
@@ -40,6 +52,7 @@ class MedicalRecord {
         diagnosa,
         tindakan,
         patientId,
+        kode_diagnosa: kodeDiagnosa,
       });
       await Models.Transaction.create({
         total_payment: biaya,
@@ -54,12 +67,10 @@ class MedicalRecord {
         },
         {
           where: {
-            patientId: patientId,
-            date: moment().format("YYYY-MM-DD"),
+            id: idReservasi,
           },
         }
       );
-      console.log(moment().format("YYYY-MM-DD"));
       return handleCreate(res);
     } catch (error) {
       handlerError(res, error);
@@ -87,8 +98,15 @@ class MedicalRecord {
       const data = await MedicalRecords.findAll(whereClause);
 
       const result = data.map((MedicalRecord) => {
-        let { id, pelayanan, keluhan, diagnosa, tindakan, createdAt } =
-          MedicalRecord.dataValues;
+        let {
+          id,
+          pelayanan,
+          keluhan,
+          diagnosa,
+          tindakan,
+          createdAt,
+          kode_diagnosa,
+        } = MedicalRecord.dataValues;
         const { purchased, status } = MedicalRecord.dataValues.transaction;
         const biayaLayanan = JSON.parse(purchased).biayaLayanan;
         const biayaObat = JSON.parse(purchased).biayaObat;
@@ -105,6 +123,7 @@ class MedicalRecord {
           pelayanan,
           keluhan,
           diagnosa,
+          kode_diagnosa,
           tindakan,
           createdAt,
           biayaLayanan,
@@ -129,6 +148,7 @@ class MedicalRecord {
         biayaObat,
         patientId,
         statusPembayaran,
+        kodeDiagnosa,
       } = req.body;
       const biaya = biayaLayanan + biayaObat;
       await MedicalRecords.update(
@@ -138,6 +158,7 @@ class MedicalRecord {
           diagnosa,
           tindakan,
           patientId,
+          kode_diagnosa: kodeDiagnosa,
         },
         {
           where: { id: req.params.id },
