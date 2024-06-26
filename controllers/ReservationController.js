@@ -51,24 +51,29 @@ class ReservationController {
       const numberRm = parseInt(countPatient[0].queue) + 1;
       const queue = String(numberRm).padStart(3, "0");
 
-      await Reservation.create({
-        date,
-        pembayaran,
-        jadwalDokterId,
-        patientId,
-        queue,
-        jenisPerawatan,
-        keluhan,
-      });
+      // await Reservation.create({
+      //   date,
+      //   pembayaran,
+      //   jadwalDokterId,
+      //   patientId,
+      //   queue,
+      //   jenisPerawatan,
+      //   keluhan,
+      // });
 
       const detailPatient = await Models.Patient.findOne({
         where: {
           id: patientId
         }
       })
+      const jadwalDokter = await Models.jadwalDokter.findOne({
+        where: {
+          id: jadwalDokterId
+        }
+      })
       // handleCreate(res);
       handleGet(res, {
-        jadwalDokterId,
+        jadwalDokter: jadwalDokter,
         date,
         pembayaran,
         dataPatient: detailPatient,
