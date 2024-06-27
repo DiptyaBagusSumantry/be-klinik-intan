@@ -18,8 +18,7 @@ class ReservationController {
     try {
       const { date, pembayaran, jadwalDokterId, patientId, jenisPerawatan, keluhan } = req.body;
       const userId = accesToken(req);
-      // let patientId
-      // console.log(userId);
+
       if (userId.role != "Patient" && !patientId) {
         return res.status(500).json({
           code: 500,
@@ -105,7 +104,6 @@ class ReservationController {
       }
 
       await Reservation.findAll(whereClause).then((get) => {
-        // console.log(patient.dataValues.user);
         const results = get.map((data) => {
           const {
             id,
@@ -154,43 +152,6 @@ class ReservationController {
       handlerError(res, error);
     }
   }
-  // static async getDetailbyPatient(req, res) {
-  //   try {
-  //     await Reservation.findAll({
-  //       where: {
-  //         patient_id: req.params.patientId,
-  //       },
-  //       order: [["date", "DESC"]],
-  //     }).then((results) => {
-  //       const data = results.map((get) => {
-  //         const { id, date, diagnosis, service, queue } = get.dataValues;
-  //         const parseService = JSON.parse(service);
-  //         return {
-  //           id,
-  //           queue,
-  //           date,
-  //           diagnosis,
-  //           service: parseService,
-  //         };
-  //       });
-  //       handleGet(res, data);
-  //     });
-  //   } catch (error) {
-  //     handlerError(res, error);
-  //   }
-  // }
-  // static async deleteReservation(req, res) {
-  //   try {
-  //     const deleteRM = await Reservation.destroy({
-  //       where: {
-  //         id: req.params.id,
-  //       },
-  //     });
-  //     handleDelete(res, deleteRM);
-  //   } catch (error) {
-  //     handlerError(res, error);
-  //   }
-  // }
 }
 
 module.exports = ReservationController;

@@ -78,7 +78,6 @@ class PatientController {
       const { page, search, sorting } = req.query;
       let whereClause = {
         where: {},
-        // include: { model: Models.User }
       };
       //sorting
       whereClause.order = [["no_rm", sorting ? sorting : "ASC"]];
@@ -87,10 +86,6 @@ class PatientController {
       if (search) {
         whereClause.where = searchWhere(search, "fullname", "phone");
       }
-
-      // if (token.role != "Admin") {
-      //   whereClause.where.user_id = token.id;
-      // }
 
       const getPatient = await Patient.findAll(whereClause);
 
@@ -104,38 +99,6 @@ class PatientController {
       }
       handleGet(res, getPatient);
 
-      // .then((data) => {
-      //   // return res.send(data)
-      //   const results = data.map((patient) => {
-      //     // const { no_rm, nik, place_birth, date_birth, gender, address, work } =
-      //     //   patient.dataValues;
-      //     // const { id, username, fullname, phone, email } =
-      //     //   patient.dataValues.user;
-      //     // const {id, no_rm, nik, fullname, date_birth, gender}
-
-      //     return {
-      //       id,
-      //       no_rm,
-      //       nik,
-      //       fullname,
-      //       place_birth,
-      //       date_birth,
-      //       gender,
-      //       address,
-      //       work,
-      //       phone,
-      //       username,
-      //       email,
-      //     };
-      //   });
-      //   if (token.role != "Patient") {
-      //     return handleGetPaginator(
-      //       res,
-      //       paginator(results, page ? page : 1, 20)
-      //     );
-      //   }
-      //   handleGet(res, results[0]);
-      // });
     } catch (error) {
       handlerError(res, error);
     }
@@ -187,25 +150,7 @@ class PatientController {
       handlerError(res, error);
     }
   }
-  // static async updateUserId(req, res) {
-  //   try {
-  //     const token = accesToken(req);
-  //     await Patient.update(
-  //       {
-  //         userId: token.id,
-  //       },
-  //       {
-  //         where: {
-  //           id: req.params.id,
-  //         },
-  //       }
-  //     ).then((status) => {
-  //       handleUpdate(res, status);
-  //     });
-  //   } catch (error) {
-  //     handlerError(req, error);
-  //   }
-  // }
+
   static async detailPatient(req, res) {
     try {
       await Patient.findOne({
@@ -214,28 +159,6 @@ class PatientController {
       }).then((result) => {
         handleGet(res, result);
       });
-      // .then((patient) => {
-      //   const { no_rm, nik, place_birth, date_birth, gender, address, work } =
-      //     patient.dataValues;
-      //   const { id, username, fullname, phone, email } =
-      //     patient.dataValues.user;
-
-      //   const data = {
-      //     id,
-      //     no_rm,
-      //     nik,
-      //     fullname,
-      //     place_birth,
-      //     date_birth,
-      //     gender,
-      //     address,
-      //     work,
-      //     phone,
-      //     username,
-      //     email,
-      //   };
-      //   handleGet(res, data);
-      // });
     } catch (error) {
       handlerError / (res, error);
     }
@@ -244,16 +167,6 @@ class PatientController {
     try {
       const token = accesToken(req);
       const {
-        // nik,
-        // fullname,
-        // place_birth,
-        // date_birth,
-        // gender,
-        // address,
-        // work,
-        // phone,
-        // username,
-        // email,
         nik,
         date_birth,
         gender,
@@ -267,8 +180,7 @@ class PatientController {
         riwayatAlergiMakanan,
         riwayatAlergiLainya
       } = req.body;
-      // const id = req.params.id;
-      // console.log(id)
+
       const data = await Patient.update(
         {
           nik,
@@ -289,34 +201,6 @@ class PatientController {
         { where: { id: req.params.id } }
       );
       handleUpdate(res, data);
-      // if (token.id != userId && token.role != "Admin") {
-      //   return res.status(500).json({
-      //     code: 500,
-      //     msg: "No Acces Update by id, Please chek Your Id!",
-      //   });
-      // }
-      // await Models.User.update(
-      //   {
-      //     username,
-      //     fullname,
-      //     phone,
-      //     email,
-      //   },
-      //   { where: { id: userId } }
-      // ).then(async (data) => {
-      // const data = await Patient.update(
-      //   {
-      //     nik,
-      //     place_birth,
-      //     date_birth,
-      //     gender,
-      //     address,
-      //     work,
-      //   },
-      //   { where: { id } }
-      // );
-      // handleUpdate(res, data);
-      // });
     } catch (error) {
       handlerError(res, error);
     }

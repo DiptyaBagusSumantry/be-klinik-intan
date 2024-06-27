@@ -26,16 +26,7 @@ class MedicalRecord {
         kodeDiagnosa,
         idReservasi,
       } = req.body;
-      // const chekMR = await Models.Reservation.findAll({
-      //   where: { patientId, date: moment().format("YYYY-MM-DD"), status: true },
-      // });
-      // if (chekMR.length > 0) {
-      //   return handlerError(res, {
-      //     message:
-      //       "Medical record already created in today or patient not yet create reservation in today, please check get medical record! or chek get reservation!",
-      //   });
-      // }
-      // if(!chekMR){}
+
       const chekReservation = await Models.Reservation.findOne({
         where: {id: idReservasi, status: false}
       })
