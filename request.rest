@@ -204,7 +204,7 @@ Content-Type: application/json
 // jika tindakan dirubah maka biaya obat juga akan berubah
 // Jadi menyebabkan biaya transaksi juga berubah
 ###
-GET http://localhost:5005/transaction
+GET http://localhost:5005/transaction?invoiceId=0b63765d-85e4-4564-9aed-5116b0b44b7c
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

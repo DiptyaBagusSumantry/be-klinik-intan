@@ -99,7 +99,7 @@ class JadwalDokterController {
       }
       if (!date) {
         date = moment().format("YYYY-MM-DD");
-        console.log(date);
+        // console.log(date);
       }
       if (date) {
         const days = [

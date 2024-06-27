@@ -12,6 +12,7 @@ const { searchWhere } = require("../helper/Search.js");
 const Models = require("../models/index.js");
 const { Result } = require("express-validator");
 const User = Models.User;
+const moment = require("moment");
 
 class UserController {
   static async amountDashboard(req, res) {
@@ -20,6 +21,11 @@ class UserController {
       // return res.send(getRole)
       const amount_patient = await Models.Patient.count();
       const amount_medical_record = await Models.Reservation.count();
+      const amountReservation = await Models.Reservation.count({
+        where: {
+          date: moment().format("YYYY-MM-DD"),
+        },
+      });
       const amount_docter = await Models.User.count({
         include: {
           model: Models.Role,
@@ -35,6 +41,7 @@ class UserController {
         amount_docter,
         amount_service,
         amount_user,
+        amountReservation,
       });
     } catch (error) {
       handlerError(res, error);
@@ -60,18 +67,21 @@ class UserController {
   static async updateUser(req, res) {
     try {
       const { fullname, username, password, phone, email, roleId } = req.body;
-      await Models.User.update({
-        fullname,
-        username,
-        password,
-        phone,
-        email,
-        roleId,
-      },{
-        where: {
-          id: req.params.id
+      await Models.User.update(
+        {
+          fullname,
+          username,
+          password,
+          phone,
+          email,
+          roleId,
+        },
+        {
+          where: {
+            id: req.params.id,
+          },
         }
-      }).then((result) => {
+      ).then((result) => {
         handleUpdate(res, result);
       });
     } catch (error) {
@@ -135,8 +145,8 @@ class UserController {
       await User.findOne({
         include: { model: Models.Role, where: { name: "Admin" } },
       }).then((result) => {
-        if(req.params.id == result.id){
-          return handlerError(res, {message: "Please chek Id!"});
+        if (req.params.id == result.id) {
+          return handlerError(res, { message: "Please chek Id!" });
         }
       });
       await User.destroy({
