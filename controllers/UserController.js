@@ -17,8 +17,6 @@ const moment = require("moment");
 class UserController {
   static async amountDashboard(req, res) {
     try {
-      // const getRole = await Models.Role.findAll()
-      // return res.send(getRole)
       const amount_patient = await Models.Patient.count();
       const amount_medical_record = await Models.Reservation.count();
       const amountReservation = await Models.Reservation.count({
