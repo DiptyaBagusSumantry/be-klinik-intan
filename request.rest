@@ -171,29 +171,29 @@ Content-Type: application/json
 
 //GET Detail REKAM MEDIS
 ###
-GET http://localhost:5005/medical-record/ae19f029-a56a-46ce-aa0b-41bdfff153f7
+GET http://localhost:5005/medical-record/d51d2b87-d196-405a-b712-c59f4840d36b
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 //Update Rekam Medis
 ###
-PUT http://localhost:5005/medical-Record/ae19f029-a56a-46ce-aa0b-41bdfff153f7
+PUT http://localhost:5005/medical-Record/d51d2b87-d196-405a-b712-c59f4840d36b
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "90b60f1b-88e8-478a-989b-602d29f09791",
-    "pelayanan": "oke sip x",
-    "keluhan": "oke sip x", 
+    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "pelayanan": "oke sip y",
+    "keluhan": "oke sip y", 
     // keluhan yang diraskan
-    "diagnosa": "oke sip x", 
-    "kodeDiaagnosa": "mantap",
+    "diagnosa": "oke sip y", 
+    "kodeDiaagnosa": "mantap y",
     //hasil analiysis dokter, termasuk penyakit dalam katagori apa
-    "tindakan": "oke sip x", 
+    "tindakan": "oke sip y", 
     // tindakan yang dilakukan dokter dengan memberikan obat apa aja
-    "biayaLayanan": 11000,
+    "biayaLayanan": 1000,
     "biayaObat": 9000,
-    "statusPembayaran": "BELUM LUNAS"
+    "statusPembayaran": "LUNAS"
     // jika biaya layanan, biaya obat, status pembayaran diupdate maka transaksi juga akan diupdate
 }
 
