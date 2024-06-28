@@ -197,7 +197,63 @@ class MedicalRecord {
         },
         include: [{ model: Models.Patient }, { model: Models.Transaction }],
       }).then((result) => {
-        handleGet(res, result);
+        const {
+          id,
+          pelayanan,
+          keluhan,
+          diagnosa,
+          kodeDiagnosa,
+          tindakan,
+          patientId,
+        } = result.dataValues;
+        const {
+          no_rm,
+          nik,
+          fullname,
+          date_birth,
+          gender,
+          address,
+          work,
+          phone,
+          statusPerkawinan,
+          agama,
+          riwayatAlergiObat,
+          riwayatAlergiMakanan,
+          riwayatAlergiLainya,
+        } = result.dataValues.patient.dataValues;
+        const {
+          id: idTransaction,
+          total_payment,
+          status,
+          purchased,
+        } = result.dataValues.transaction.dataValues;
+        // console.log(result)
+        handleGet(res, {
+          id,
+          pelayanan,
+          keluhan,
+          diagnosa,
+          kodeDiagnosa,
+          tindakan,
+          patientId,
+          no_rm,
+          nik,
+          fullname,
+          date_birth,
+          gender,
+          address,
+          work,
+          phone,
+          statusPerkawinan,
+          agama,
+          riwayatAlergiObat,
+          riwayatAlergiMakanan,
+          riwayatAlergiLainya,
+          idTransaction,
+          total_payment,
+          status,
+          purchased: JSON.parse(purchased),
+        });
       });
     } catch (error) {
       handlerError(res, error);
