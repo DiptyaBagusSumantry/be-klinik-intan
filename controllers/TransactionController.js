@@ -4,6 +4,7 @@ const {
   handlerError,
   handleUpdate,
   handleGetPaginator,
+  handleGet,
 } = require("../helper/HandlerError.js");
 const { paginator } = require("../helper/Pagination.js");
 const { searchWhere } = require("../helper/Search.js");
@@ -55,7 +56,8 @@ class TransactionController {
           purchased: JSON.parse(purchased),
         };
       });
-      handleGetPaginator(res, paginator(results, page ? page : 1, 20));
+      // handleGetPaginator(res, paginator(results, page ? page : 1, 20));
+      return handleGet(res, results)
     } catch (error) {
       handlerError(res, error);
     }

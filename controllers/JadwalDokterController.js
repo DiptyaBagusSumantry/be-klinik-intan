@@ -129,7 +129,8 @@ class JadwalDokterController {
           jamSelesai: moment(jamSelesai, "HH:mm:ss").format("HH:mm"),
         };
       });
-      return handleGetPaginator(res, paginator(data, page ? page : 1, 20));
+      // return handleGetPaginator(res, paginator(data, page ? page : 1, 20));
+      return handleGet(res,data)
     } catch (error) {
       handlerError(res, error);
     }
