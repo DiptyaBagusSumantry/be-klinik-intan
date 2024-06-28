@@ -202,7 +202,7 @@ class MedicalRecord {
           pelayanan,
           keluhan,
           diagnosa,
-          kodeDiagnosa,
+          kode_diagnosa,
           tindakan,
           patientId,
         } = result.dataValues;
@@ -233,7 +233,7 @@ class MedicalRecord {
           pelayanan,
           keluhan,
           diagnosa,
-          kodeDiagnosa,
+          kode_diagnosa,
           tindakan,
           patientId,
           no_rm,
