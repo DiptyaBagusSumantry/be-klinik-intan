@@ -226,10 +226,12 @@ class MedicalRecord {
           total_payment,
           status,
           purchased,
+          invoice
         } = result.dataValues.transaction.dataValues;
         // console.log(result)
         handleGet(res, {
           id,
+          invoiceId: invoice,
           pelayanan,
           keluhan,
           diagnosa,
