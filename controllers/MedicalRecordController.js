@@ -226,7 +226,8 @@ class MedicalRecord {
           total_payment,
           status,
           purchased,
-          invoice
+          invoice,
+          createdAt
         } = result.dataValues.transaction.dataValues;
         // console.log(result)
         handleGet(res, {
@@ -254,6 +255,7 @@ class MedicalRecord {
           idTransaction,
           total_payment,
           status,
+          createdAt,
           purchased: JSON.parse(purchased),
         });
       });
