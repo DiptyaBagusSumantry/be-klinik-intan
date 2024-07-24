@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI1MGNkMDE3LWM0ODItNGE5NS04YTFhLWRmOTE5NGYwYWJkYiIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcxOTMzNDk2MSwiZXhwIjoxNzE5NjgwNTYxfQ.fa1YQMbs8Y02FajUudl65O_qIo93VwsMR9ctiCYIoH0
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI1MGNkMDE3LWM0ODItNGE5NS04YTFhLWRmOTE5NGYwYWJkYiIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyMTgzNTc0NSwiZXhwIjoxNzIyMTgxMzQ1fQ.mwmTf9AlPWtwFdOGbwJkHl_iSTMIQzqbrazsoxy0NSU
 
 //register patient
 ###
@@ -6,13 +6,13 @@ POST http://localhost:5005/register-patient
 Content-Type: application/json
 
 {
-    "nik": "1234567821249095",
+    "nik": "1234567821249795",
     "fullname": "Patient 1",
     "date_birth": "2024-03-12",
     "gender": "Patient 1",
     "address": "Patient 1",
     "work": "Patient 1",
-    "phone": "012340576201",
+    "phone": "012340577201",
     "statusPerkawinan": "",
     "agama": "",
     "riwayatAlergiObat": "",
@@ -97,11 +97,11 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "fullname": "Dokter",
-    "username": "dokter",
+    "fullname": "Dokter X",
+    "username": "dokter C",
     "password": "Dokter1234!",
     "phone": "0867572732873",
-    "email": "dokter@gmail.com",
+    "email": "dokterx@gmail.com",
     "roleId": "66c6f898-58a2-4908-95f7-f7173b39b99f"
 }
 
@@ -148,7 +148,7 @@ Content-Type: application/json
 
 {
     "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
-    "idReservasi": "297867e2-e12b-42ae-bcae-9c6e9f30eb11",
+    "idReservasi": "cd273ffd-86cb-4787-b31b-46c33d00d8b0",
     //ngambil patinetId dari endpoint get ALL patientId. di ui tampilkan nama. di request pake id
     "pelayanan": "oke",
     "keluhan": "oke", 
@@ -160,7 +160,8 @@ Content-Type: application/json
     // tindakan yang dilakukan dokter dengan memberikan obat apa aja
     "biayaLayanan": 50000,
     "biayaObat": 10200,
-    "statusPembayaran": "LUNAS"
+    "statusPembayaran": "LUNAS",
+    "obat": "obat"
 }
 
 //GET REKAM MEDIS

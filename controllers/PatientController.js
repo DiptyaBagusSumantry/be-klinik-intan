@@ -28,7 +28,7 @@ class PatientController {
         agama,
         riwayatAlergiObat,
         riwayatAlergiMakanan,
-        riwayatAlergiLainya
+        riwayatAlergiLainya,
       } = req.body;
 
       //no_rm
@@ -61,7 +61,14 @@ class PatientController {
           : null,
         riwayatAlergiLainya: riwayatAlergiLainya ? riwayatAlergiLainya : null,
       });
-      return handleCreate(res);
+      return res.status(201).json({
+        code: 201,
+        message: "Success Create Data",
+        data: {
+          nik,
+          no_rm,
+        },
+      });
     } catch (error) {
       if (error.errors) {
         await Models.User.destroy({
@@ -98,7 +105,6 @@ class PatientController {
         );
       }
       handleGet(res, getPatient);
-
     } catch (error) {
       handlerError(res, error);
     }
@@ -119,15 +125,8 @@ class PatientController {
         if (!patient) {
           return res.status(404).json({ code: 404, msg: "Data Not Found!" });
         }
-        const {
-          no_rm,
-          nik,
-          place_birth,
-          date_birth,
-          gender,
-          address,
-          work,
-        } = patient.dataValues;
+        const { no_rm, nik, place_birth, date_birth, gender, address, work } =
+          patient.dataValues;
         const { id, username, fullname, phone, email } =
           patient.dataValues.user;
         const data = {
@@ -178,7 +177,7 @@ class PatientController {
         agama,
         riwayatAlergiObat,
         riwayatAlergiMakanan,
-        riwayatAlergiLainya
+        riwayatAlergiLainya,
       } = req.body;
 
       const data = await Patient.update(

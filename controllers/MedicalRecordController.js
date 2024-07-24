@@ -26,6 +26,7 @@ class MedicalRecord {
         statusPembayaran,
         kodeDiagnosa,
         idReservasi,
+        obat
       } = req.body;
 
       const chekReservation = await Models.Reservation.findOne({
@@ -45,6 +46,7 @@ class MedicalRecord {
         tindakan,
         patientId,
         kode_diagnosa: kodeDiagnosa,
+        obat
       });
       await Models.Transaction.create({
         total_payment: biaya,
@@ -98,6 +100,7 @@ class MedicalRecord {
           tindakan,
           createdAt,
           kode_diagnosa,
+          obat
         } = MedicalRecord.dataValues;
         const { purchased, status } = MedicalRecord.dataValues.transaction;
         const biayaLayanan = JSON.parse(purchased).biayaLayanan;
@@ -112,6 +115,7 @@ class MedicalRecord {
           id,
           fullname: MedicalRecord.dataValues.patient.fullname,
           patientId: MedicalRecord.dataValues.patient.id,
+          noRm: MedicalRecord.dataValues.patient.no_rm,
           pelayanan,
           keluhan,
           diagnosa,
@@ -120,6 +124,7 @@ class MedicalRecord {
           createdAt,
           biayaLayanan,
           biayaObat,
+          obat,
           statusPembayran: status,
         };
       });

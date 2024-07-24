@@ -81,6 +81,20 @@ const MedicalRecord = (sequelizeInstance) => {
           },
         },
       },
+      obat: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "obat tidak boleh null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "obat tidak boleh kosong!",
+          },
+        },
+      },
     },
     {
       freezeTableName: true,
