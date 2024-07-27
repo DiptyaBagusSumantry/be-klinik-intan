@@ -100,6 +100,9 @@ const reservation = (sequelizeInstance) => {
           },
         },
       },
+      masukMelalui: {
+        type: Sequelize.STRING,
+      },
       keluhan: {
         type: Sequelize.STRING,
       },

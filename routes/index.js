@@ -132,7 +132,7 @@ router.post(
   ReservationController.createReservation
 );
 router.get(
-  "/reservation/:id",
+  "/reservati  on/:id",
   verifyToken,
   ReservationController.getDetailReservation
 );

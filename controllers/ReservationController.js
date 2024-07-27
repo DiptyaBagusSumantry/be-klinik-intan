@@ -15,6 +15,8 @@ const {
 const { paginator } = require("../helper/Pagination.js");
 const { searchWhere } = require("../helper/Search.js");
 const { accesToken } = require("../helper/chekAccessToken.js");
+const AuthController = require("./AuthController.js");
+const User = require("../models/UserModels.js");
 
 class ReservationController {
   static async createReservation(req, res) {
@@ -29,8 +31,32 @@ class ReservationController {
         diagnosa,
         ruangan,
         pengantarPatient,
+        masukMelalui
       } = req.body;
       const userId = accesToken(req);
+
+      let fetch;
+      if (userId.role == "patient") {
+        await Models.Patient.findOne({
+          where: { id: userId.id },
+        }).then((data) => {
+          fetch = {
+            username: data.fullname,
+            role: userId.role,
+            id: userId.id,
+          };
+        });
+      } else {
+        await Models.User.findOne({
+          where: { id: userId.id },
+        }).then((data) => {
+          fetch = {
+            username: data.username,
+            role: userId.role,
+            id: userId.id,
+          };
+        });
+      }
 
       if (userId.role != "Patient" && !patientId) {
         return res.status(500).json({
@@ -73,8 +99,10 @@ class ReservationController {
         jenisPerawatan,
         keluhan: keluhan ? keluhan : " ",
         diagnosa: diagnosa ? diagnosa : " ",
-        ruangan: ruangan ? ruangan: " ",
-        pengantarPatient: pengantarPatient ? pengantarPatient: " ",
+        ruangan: ruangan ? ruangan : " ",
+        masukMelalui: masukMelalui ? masukMelalui : " ",
+        pengantarPatient: pengantarPatient ? pengantarPatient : " ",
+        namaPetugas: fetch.username,
       });
 
       const detailPatient = await Models.Patient.findOne({
@@ -136,7 +164,9 @@ class ReservationController {
             createdAt,
             keluhan,
             diagnosa,
-            ruangan
+            ruangan,
+            namaPetugas,
+            masukMelalui,
           } = data.dataValues;
           const {
             id: patientId,
@@ -163,7 +193,9 @@ class ReservationController {
             waktuPendaftaran: createdAt,
             keluhan,
             diagnosa,
-            ruangan
+            ruangan,
+            namaPetugas,
+            masukMelalui,
           };
         });
         handleGetPaginator(res, paginator(results, page ? page : 1, 20));

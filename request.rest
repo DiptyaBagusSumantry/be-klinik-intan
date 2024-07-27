@@ -240,12 +240,13 @@ Content-Type: application/json
     "ruangan": "ruangan",
     "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
     "pembayaran": "umum",
-    "jenisPerawatan": "rawat-inap"
+    "jenisPerawatan": "rawat-inap",
+    "masukMelalui": "depan"
 }
 
 //GET Rawat Inap
 ###
-GET http://localhost:5005/reservation/rawat-inap
+GET http://localhost:5005/type-reservation/rawat-inap
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -266,7 +267,7 @@ Content-Type: application/json
 
 //GET Rawat Jalan
 ###
-GET http://localhost:5005/type-reservation/rawat-inap
+GET http://localhost:5005/type-reservation/rawat-jalan
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -285,9 +286,9 @@ Content-Type: application/json
     "jenisPerawatan": "UGD"
 }
 
-//GET Rawat Inap
+//GET Ugd
 ###
-GET http://localhost:5005/reservation/ugd
+GET http://localhost:5005/type-reservation/ugd
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
