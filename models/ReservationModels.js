@@ -86,19 +86,31 @@ const reservation = (sequelizeInstance) => {
           },
         },
       },
-      keluhan: {
+      namaPetugas: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
           notNull: {
             args: true,
-            msg: "Keluhan Can't be Null!",
+            msg: "Nama Petugas Can't be Null!",
           },
           notEmpty: {
             args: true,
-            msg: "Keluhan Can't be Empty!",
+            msg: "Nama Petugas Can't be Empty!",
           },
         },
+      },
+      keluhan: {
+        type: Sequelize.STRING,
+      },
+      ruangan: {
+        type: Sequelize.STRING,
+      },
+      pengantarPatient: {
+        type: Sequelize.STRING,
+      },
+      diagnosa: {
+        type: Sequelize.STRING,
       },
     },
     {

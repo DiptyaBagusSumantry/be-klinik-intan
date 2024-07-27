@@ -136,7 +136,7 @@ Content-Type: application/json
 ###
 DELETE  http://localhost:5005/user-management/ecff5d6c-1a44-4063-a746-0eeb7d2432ab
 Authorization: Bearer {{token}}
-Content-Type: application/json
+Content-Type: application/json 
 
 
 
@@ -204,28 +204,92 @@ Content-Type: application/json
 // berikaitan antara tindakan yaitu isi obat dan biayaObat
 // jika tindakan dirubah maka biaya obat juga akan berubah
 // Jadi menyebabkan biaya transaksi juga berubah
-###
-GET http://localhost:5005/transaction?invoiceId=0b63765d-85e4-4564-9aed-5116b0b44b7c
-Authorization: Bearer {{token}}
-Content-Type: application/json
+# ###
+# GET http://localhost:5005/transaction?invoiceId=
+# Authorization: Bearer {{token}}
+# Content-Type: application/json
 
 // Create Reservation
 // jika role patient yang create ngga perlu patientId
 // jika role admin yang create perlu patientId
 // patient id diambil dari get patient ketika ada di dashboard admin
+
+# ###
+# POST http://localhost:5005/reservation
+# Authorization: Bearer {{token}}
+# Content-Type: application/json
+
+# {
+#     "date": "2025-03-15",
+#     "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
+#     "pembayaran": "umum",
+#     "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+#     "jenisPerawatan": "IGD", 
+#     "keluhan": "tidak ada"
+# }
+
+//Create Rawat Inap
 ###
 POST http://localhost:5005/reservation
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "date": "2025-03-15",
+    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "diagnosa": "diagnosa",
+    "ruangan": "ruangan",
     "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
     "pembayaran": "umum",
-    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
-    "jenisPerawatan": "IGD", 
-    "keluhan": "tidak ada"
+    "jenisPerawatan": "rawat-inap"
 }
+
+//GET Rawat Inap
+###
+GET http://localhost:5005/reservation/rawat-inap
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//Create Rawat Jalan
+###
+POST http://localhost:5005/reservation
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "date": "2025-03-12",
+    "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
+    "jenisPerawatan": "rawat-jalan", 
+    "keluhan": "tidak ada",
+    "pembayaran": "umum"
+}
+
+//GET Rawat Jalan
+###
+GET http://localhost:5005/type-reservation/rawat-inap
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//Create UGD
+###
+POST http://localhost:5005/reservation
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "keluhan": "tidak ada",
+    "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
+    "pengantarPatient": " ",
+    "pembayaran": "umum",
+    "jenisPerawatan": "UGD"
+}
+
+//GET Rawat Inap
+###
+GET http://localhost:5005/reservation/ugd
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
 ###
 GET http://localhost:5005/reservation?page=&search=&=&sorting=

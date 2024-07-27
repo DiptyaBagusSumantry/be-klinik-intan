@@ -2,6 +2,9 @@ const Models = require("../models/index");
 const Reservation = Models.Reservation;
 const Patient = Models.Patient;
 const Transaction = Models.Transaction;
+const moment = require("moment");
+
+const formattedDate = moment().format("YYYY-MM-DD");
 const {
   handlerError,
   handleCreate,
@@ -16,7 +19,17 @@ const { accesToken } = require("../helper/chekAccessToken.js");
 class ReservationController {
   static async createReservation(req, res) {
     try {
-      const { date, pembayaran, jadwalDokterId, patientId, jenisPerawatan, keluhan } = req.body;
+      const {
+        date,
+        pembayaran,
+        jadwalDokterId,
+        patientId,
+        jenisPerawatan,
+        keluhan,
+        diagnosa,
+        ruangan,
+        pengantarPatient,
+      } = req.body;
       const userId = accesToken(req);
 
       if (userId.role != "Patient" && !patientId) {
@@ -31,15 +44,17 @@ class ReservationController {
 
       //check whether patient already reservation in date
       const chekPatient = await Reservation.findAll({
-        where: { date, patientId },
+        where: { date: date ? date : formattedDate, patientId, jenisPerawatan },
       });
-      if (chekPatient.length >0){
-        return handlerError(res, {message: `Patient alaready reservation in date ${date}. Plesae Chek your reservation!`})
+      if (chekPatient.length > 0) {
+        return handlerError(res, {
+          message: `Patient alaready reservation in date ${date}. Plesae Chek your reservation!`,
+        });
       }
 
       //queue
       let countPatient = await Reservation.findAll({
-        where: { date },
+        where: { date: date ? date : formattedDate },
       });
       if (countPatient.length <= 0) {
         countPatient.push({ queue: "000" });
@@ -49,27 +64,29 @@ class ReservationController {
       });
       const numberRm = parseInt(countPatient[0].queue) + 1;
       const queue = String(numberRm).padStart(3, "0");
-
       await Reservation.create({
-        date,
+        date: date ? date : formattedDate,
         pembayaran,
         jadwalDokterId,
         patientId,
         queue,
         jenisPerawatan,
-        keluhan,
+        keluhan: keluhan ? keluhan : " ",
+        diagnosa: diagnosa ? diagnosa : " ",
+        ruangan: ruangan ? ruangan: " ",
+        pengantarPatient: pengantarPatient ? pengantarPatient: " ",
       });
 
       const detailPatient = await Models.Patient.findOne({
         where: {
-          id: patientId
-        }
-      })
+          id: patientId,
+        },
+      });
       const jadwalDokter = await Models.jadwalDokter.findOne({
         where: {
-          id: jadwalDokterId
-        }
-      })
+          id: jadwalDokterId,
+        },
+      });
       // handleCreate(res);
       handleGet(res, {
         jadwalDokter: jadwalDokter,
@@ -87,12 +104,16 @@ class ReservationController {
     try {
       const userId = accesToken(req);
       const { page, search, sorting } = req.query;
+
       let whereClause = {
         include: [{ model: Patient }, { model: Models.jadwalDokter }],
         where: {},
       };
       //sorting
       whereClause.order = [["createdAt", sorting ? sorting : "DESC"]];
+
+      //jenis perawtan
+      whereClause.where.jenisPerawatan = req.params.type;
 
       //searching
       if (search) {
@@ -111,6 +132,11 @@ class ReservationController {
             pembayaran,
             queue,
             status: statusPeriksa,
+            pengantarPatient,
+            createdAt,
+            keluhan,
+            diagnosa,
+            ruangan
           } = data.dataValues;
           const {
             id: patientId,
@@ -133,6 +159,11 @@ class ReservationController {
             fullname,
             gender,
             phone,
+            pengantarPatient,
+            waktuPendaftaran: createdAt,
+            keluhan,
+            diagnosa,
+            ruangan
           };
         });
         handleGetPaginator(res, paginator(results, page ? page : 1, 20));

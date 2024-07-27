@@ -137,7 +137,7 @@ router.get(
   ReservationController.getDetailReservation
 );
 
-router.get("/reservation", verifyToken, ReservationController.getReservation);
+router.get("/type-reservation/:type", verifyToken, ReservationController.getReservation);
 router.post("/service", verifyToken, IsAdmin, ServiceController.createService);
 router.get("/service", verifyToken, ServiceController.getService);
 router.get("/transaction", verifyToken, TransactionController.getTransaction);
