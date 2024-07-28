@@ -31,7 +31,7 @@ class ReservationController {
         diagnosa,
         ruangan,
         pengantarPatient,
-        masukMelalui
+        masukMelalui,
       } = req.body;
       const userId = accesToken(req);
 
@@ -211,6 +211,38 @@ class ReservationController {
         include: [{ model: Patient }, { model: Models.jadwalDokter }],
       });
       handleGet(res, data);
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async deleteReservation(req, res) {
+    try {
+      const data = await Reservation.destroy({
+        where: { id: req.params.id },
+      });
+      handleDelete(res, data);
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async getAllReservation(req, res) {
+    try {
+      const { page, search, sorting } = req.query;
+
+      let whereClause = {
+        include: [{ model: Patient }, { model: Models.jadwalDokter }],
+        where: {},
+      };
+      //sorting
+      whereClause.order = [["createdAt", sorting ? sorting : "DESC"]];
+
+      //searching
+      if (search) {
+        whereClause.where = searchWhere(search, "queue", "date");
+      }
+
+      const data = await Reservation.findAll(whereClause);
+      handleGetPaginator(res, paginator(data, page ? page : 1, 20));
     } catch (error) {
       handlerError(res, error);
     }

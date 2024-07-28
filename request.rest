@@ -209,6 +209,25 @@ Content-Type: application/json
 # Authorization: Bearer {{token}}
 # Content-Type: application/json
 
+//Get ALL Reservasi
+###
+GET http://localhost:5005/reservation
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//Delete Reservasi
+###
+DELETE  http://localhost:5005/reservation/c6b790d1-59c7-4104-b13f-e2944b4f85b3
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+//Detail Reservasi
+###
+GET  http://localhost:5005/reservation/7373ac8d-0c0f-4edf-9579-6121cf1336d4
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
 // Create Reservation
 // jika role patient yang create ngga perlu patientId
 // jika role admin yang create perlu patientId
