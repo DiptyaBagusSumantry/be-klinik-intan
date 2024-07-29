@@ -74,8 +74,8 @@ class TransactionController {
         },
       }).then((results) => {
         const data = results.map((a) => {
-          console.log(a.dataValues.reservation.dataValues);
-          let { id, invoice, total_payment, status, purchased, createdAt } =
+          console.log(a.dataValues);
+          let { id, invoice, total_payment, status, purchased, createdAt, medicalRecordId } =
             a.dataValues;
           const { no_rm, fullname } =
             a.dataValues.reservation.dataValues.patient.dataValues;
@@ -96,6 +96,7 @@ class TransactionController {
             ruangan,
             pembayaran,
             purchased: JSON.parse(purchased),
+            medicalRecordId,
             createdAt,
           };
         });
