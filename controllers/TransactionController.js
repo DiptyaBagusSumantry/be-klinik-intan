@@ -68,21 +68,35 @@ class TransactionController {
         where: {
           type: req.params.type,
         },
-        include: {
-          model: Models.Reservation,
-          include: [{ model: Models.Patient }, { model: Models.jadwalDokter }],
-        },
+        include: [
+          {
+            model: Models.Reservation,
+            include: [
+              { model: Models.Patient },
+              { model: Models.jadwalDokter },
+            ],
+          },
+          { model: Models.MedicalRecord },
+        ],
       }).then((results) => {
         const data = results.map((a) => {
-          console.log(a.dataValues);
-          let { id, invoice, total_payment, status, purchased, createdAt, medicalRecordId } =
-            a.dataValues;
+          // console.log(a.dataValues);
+          let {
+            id,
+            invoice,
+            total_payment,
+            status,
+            purchased,
+            createdAt,
+            medicalRecordId,
+          } = a.dataValues;
           const { no_rm, fullname } =
             a.dataValues.reservation.dataValues.patient.dataValues;
           const { poli, namaDokter } =
             a.dataValues.reservation.dataValues.jadwal_dokter.dataValues;
-          const { ruangan, diagnosis, pembayaran} =
+          const { ruangan, pembayaran } =
             a.dataValues.reservation.dataValues;
+          const { diagnosa } = a.dataValues.medical_record;
           return {
             id,
             no_rm,
@@ -92,7 +106,7 @@ class TransactionController {
             status,
             poli,
             namaDokter,
-            diagnosis,
+            diagnosa,
             ruangan,
             pembayaran,
             purchased: JSON.parse(purchased),
