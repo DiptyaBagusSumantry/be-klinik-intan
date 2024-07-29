@@ -1,5 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI1MGNkMDE3LWM0ODItNGE5NS04YTFhLWRmOTE5NGYwYWJkYiIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyMTgzNTc0NSwiZXhwIjoxNzIyMTgxMzQ1fQ.mwmTf9AlPWtwFdOGbwJkHl_iSTMIQzqbrazsoxy0NSU
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTE4ZGZkLTk5ODEtNDUyZC1hMTQ3LTk4Yzk2MmEwMDZlMyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyMjI3MDY2OSwiZXhwIjoxNzIyNjE2MjY5fQ.BiFoBPDu3JE08wbcACEsb66pXCsWqPjiP1gBJJX5uhw
 //register patient
 ###
 POST http://localhost:5005/register-patient
@@ -147,8 +146,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
-    "idReservasi": "cd273ffd-86cb-4787-b31b-46c33d00d8b0",
+    "patientId": "de70b1f5-db97-4b11-9d35-10f1061c68c9",
+    "idReservasi": "3dc0d5e3-0eea-4c6b-b368-cee8ffe26113",
     //ngambil patinetId dari endpoint get ALL patientId. di ui tampilkan nama. di request pake id
     "pelayanan": "oke",
     "keluhan": "oke", 
@@ -209,6 +208,21 @@ Content-Type: application/json
 # Authorization: Bearer {{token}}
 # Content-Type: application/json
 
+###
+GET http://localhost:5005/transaction/ugd
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+GET http://localhost:5005/transaction/rawat-inap
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+GET http://localhost:5005/transaction/rawat-jalan
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
 //Get ALL Reservasi
 ###
 GET http://localhost:5005/reservation
@@ -254,7 +268,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "patientId": "de70b1f5-db97-4b11-9d35-10f1061c68c9",
     "diagnosa": "diagnosa",
     "ruangan": "ruangan",
     "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
@@ -276,9 +290,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "patientId": "de70b1f5-db97-4b11-9d35-10f1061c68c9",
     "date": "2025-03-12",
-    "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
+    "jadwalDokterId": "d5e68e75-0541-4c5f-8d68-325569d29ab9",
     "jenisPerawatan": "rawat-jalan", 
     "keluhan": "tidak ada",
     "pembayaran": "umum"
@@ -297,9 +311,9 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "patientId": "de70b1f5-db97-4b11-9d35-10f1061c68c9",
     "keluhan": "tidak ada",
-    "jadwalDokterId": "c6b790d1-59c7-4104-b13f-e2944b4f85b3",
+    "jadwalDokterId": "d5e68e75-0541-4c5f-8d68-325569d29ab9",
     "pengantarPatient": " ",
     "pembayaran": "umum",
     "jenisPerawatan": "UGD"

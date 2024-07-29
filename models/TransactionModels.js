@@ -57,6 +57,20 @@ const Transaction = (sequelizeInstance) => {
           },
         },
       },
+      type: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "Type Can't be Null!",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Type Can't be Empty!",
+          },
+        },
+      },
     },
     {
       freezeTableName: true,

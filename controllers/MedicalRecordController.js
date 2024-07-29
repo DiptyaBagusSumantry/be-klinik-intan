@@ -54,6 +54,8 @@ class MedicalRecord {
         status: statusPembayaran ? statusPembayaran : "BELUM LUNAS",
         purchased: JSON.stringify({ biayaLayanan, biayaObat }),
         medicalRecordId: dataMR.id,
+        type: chekReservation.jenisPerawatan,
+        reservationId: idReservasi,
       });
       await Models.Reservation.update(
         {
@@ -160,8 +162,8 @@ class MedicalRecord {
         },
         raw: true,
       });
-      console.log(getDetailRM)
-      console.log(getTransaction)
+      // console.log(getDetailRM)
+      // console.log(getTransaction)
       const biaya = biayaLayanan + biayaObat;
       await MedicalRecords.update(
         {

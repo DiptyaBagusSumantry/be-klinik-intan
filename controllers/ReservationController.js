@@ -34,7 +34,7 @@ class ReservationController {
         masukMelalui,
       } = req.body;
       const userId = accesToken(req);
-
+      
       let fetch;
       if (userId.role == "patient") {
         await Models.Patient.findOne({
@@ -50,6 +50,8 @@ class ReservationController {
         await Models.User.findOne({
           where: { id: userId.id },
         }).then((data) => {
+          console.log(userId);
+          console.log(data);
           fetch = {
             username: data.username,
             role: userId.role,

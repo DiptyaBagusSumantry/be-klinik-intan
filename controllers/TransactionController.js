@@ -57,7 +57,50 @@ class TransactionController {
         };
       });
       // handleGetPaginator(res, paginator(results, page ? page : 1, 20));
-      return handleGet(res, results)
+      return handleGet(res, results);
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
+  static async getTypeTransaction(req, res) {
+    try {
+      await Transaction.findAll({
+        where: {
+          type: req.params.type,
+        },
+        include: {
+          model: Models.Reservation,
+          include: [{ model: Models.Patient }, { model: Models.jadwalDokter }],
+        },
+      }).then((results) => {
+        const data = results.map((a) => {
+          console.log(a.dataValues.reservation.dataValues);
+          let { id, invoice, total_payment, status, purchased, createdAt } =
+            a.dataValues;
+          const { no_rm, fullname } =
+            a.dataValues.reservation.dataValues.patient.dataValues;
+          const { poli, namaDokter } =
+            a.dataValues.reservation.dataValues.jadwal_dokter.dataValues;
+          const { ruangan, diagnosis, pembayaran} =
+            a.dataValues.reservation.dataValues;
+          return {
+            id,
+            no_rm,
+            fullname,
+            invoice,
+            total_payment,
+            status,
+            poli,
+            namaDokter,
+            diagnosis,
+            ruangan,
+            pembayaran,
+            purchased: JSON.parse(purchased),
+            createdAt,
+          };
+        });
+        handleGet(res, data);
+      });
     } catch (error) {
       handlerError(res, error);
     }

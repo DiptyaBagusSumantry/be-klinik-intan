@@ -151,6 +151,7 @@ router.get("/type-reservation/:type", verifyToken, ReservationController.getRese
 router.post("/service", verifyToken, IsAdmin, ServiceController.createService);
 router.get("/service", verifyToken, ServiceController.getService);
 router.get("/transaction", verifyToken, TransactionController.getTransaction);
+router.get("/transaction/:type", verifyToken, TransactionController.getTypeTransaction);
 
 // router.get("/reservation-patient/:patientId", verifyToken, IsUser, ReservationController.getDetailbyPatient);
 
