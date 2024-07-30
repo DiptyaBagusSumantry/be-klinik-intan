@@ -147,7 +147,7 @@ Content-Type: application/json
 
 {
     "patientId": "de70b1f5-db97-4b11-9d35-10f1061c68c9",
-    "idReservasi": "3dc0d5e3-0eea-4c6b-b368-cee8ffe26113",
+    "idReservasi": "2253abde-e7bc-461c-8f64-45aa7e4c2157",
     //ngambil patinetId dari endpoint get ALL patientId. di ui tampilkan nama. di request pake id
     "pelayanan": "oke",
     "keluhan": "oke", 
@@ -336,8 +336,21 @@ GET http://localhost:5005/reservation/053b48f7-dcd7-4427-aeeb-cab8e1f3065b
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
+//create layanan
 ###
 POST http://localhost:5005/service
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+   "code": "CBTG1", 
+   "name": "Cabut Gigi", 
+   "price": "100000"
+}
+
+//update layanan
+###
+PUT http://localhost:5005/service/77897907guhjfhfgj
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

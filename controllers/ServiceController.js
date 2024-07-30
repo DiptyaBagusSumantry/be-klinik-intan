@@ -43,6 +43,25 @@ class ServiceController {
       handlerError(res, error);
     }
   }
+  static async updateService(req, res) {
+    try {
+      const { code, name, price } = req.body;
+      await Service.update(
+        {
+          code,
+          name,
+          price,
+        },
+        {
+          where: { id: req.params.id },
+        }
+      ).then((result) => {
+        handleUpdate(res, result);
+      });
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
   // static async getDetailService(req, res) {
   //   try {
   //     const get = await Service.findOne({
