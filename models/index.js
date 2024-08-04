@@ -7,7 +7,7 @@ const Transaction = require("./TransactionModels.js");
 const Service = require("./ServiceModels.js");
 const Role = require("./RoleModels.js");
 const jadwalDokter = require("./JadwalDokter.js");
-const MedicalRecord = require("./MedicalRecord.js")
+const MedicalRecord = require("./MedicalRecord.js");
 
 const sequelizeInstance = new Sequelize(
   dbConfig.DB,
@@ -34,8 +34,8 @@ db.Reservation = Reservation(sequelizeInstance);
 db.Transaction = Transaction(sequelizeInstance);
 db.Service = Service(sequelizeInstance);
 db.Role = Role(sequelizeInstance);
-db.jadwalDokter = jadwalDokter(sequelizeInstance)
-db.MedicalRecord = MedicalRecord(sequelizeInstance)
+db.jadwalDokter = jadwalDokter(sequelizeInstance);
+db.MedicalRecord = MedicalRecord(sequelizeInstance);
 
 //Role - User
 db.Role.hasMany(db.User, {
@@ -134,7 +134,7 @@ db.MedicalRecord.hasOne(db.Transaction, {
   foreignKey: {
     name: "medicalRecordId",
     type: Sequelize.UUID,
-    allowNull: false
+    allowNull: false,
   },
 });
 

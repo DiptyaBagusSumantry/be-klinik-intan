@@ -46,7 +46,7 @@ class MedicalRecord {
         tindakan,
         patientId,
         kode_diagnosa: kodeDiagnosa,
-        obat
+        obat: JSON.stringify(obat)
       });
       await Models.Transaction.create({
         total_payment: biaya,
@@ -126,7 +126,7 @@ class MedicalRecord {
           createdAt,
           biayaLayanan,
           biayaObat,
-          obat,
+          obat: JSON.parse(obat),
           statusPembayran: status,
         };
       });
@@ -148,6 +148,7 @@ class MedicalRecord {
         patientId,
         statusPembayaran,
         kodeDiagnosa,
+        obat
       } = req.body;
 
       const getDetailRM = await MedicalRecords.findOne({
@@ -165,6 +166,7 @@ class MedicalRecord {
       // console.log(getDetailRM)
       // console.log(getTransaction)
       const biaya = biayaLayanan + biayaObat;
+      console.log(getDetailRM.pelayanan);
       await MedicalRecords.update(
         {
           pelayanan: pelayanan ? pelayanan : getDetailRM.pelayanan,
@@ -173,6 +175,7 @@ class MedicalRecord {
           tindakan: tindakan ? tindakan : getDetailRM.tindakan,
           patientId: patientId ? patientId : getDetailRM.patientId,
           kode_diagnosa: kodeDiagnosa ? kodeDiagnosa : getDetailRM.kode_diagnosa,
+          obat: obat ? JSON.stringify(obat) : getDetailRM.obat
         },
         {
           where: { id: req.params.id },

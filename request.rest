@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhMTE4ZGZkLTk5ODEtNDUyZC1hMTQ3LTk4Yzk2MmEwMDZlMyIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyMjI3MDY2OSwiZXhwIjoxNzIyNjE2MjY5fQ.BiFoBPDu3JE08wbcACEsb66pXCsWqPjiP1gBJJX5uhw
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEyMjk1YTliLTEwNTEtNDc2OC04ZjdlLWE3OTk0NjE0YjFhMSIsInJvbGUiOiJBZG1pbiIsImlhdCI6MTcyMjc5MjU3MCwiZXhwIjoxNzIzMTM4MTcwfQ.m-hTdX2KCoRItcJlAWLaVdx7ApKUaOZrw0aa-BLaE4E
 //register patient
 ###
 POST http://localhost:5005/register-patient
@@ -146,8 +146,8 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "de70b1f5-db97-4b11-9d35-10f1061c68c9",
-    "idReservasi": "2253abde-e7bc-461c-8f64-45aa7e4c2157",
+    "patientId": "1e0e37c9-63ef-4306-a6b9-f29983b4f289",
+    "idReservasi": "806f7022-e790-4c6d-aa85-692c4ead39cb",
     //ngambil patinetId dari endpoint get ALL patientId. di ui tampilkan nama. di request pake id
     "pelayanan": "oke",
     "keluhan": "oke", 
@@ -158,9 +158,18 @@ Content-Type: application/json
     "tindakan": "oke", 
     // tindakan yang dilakukan dokter dengan memberikan obat apa aja
     "biayaLayanan": 50000,
+    "obat": 
+    [{
+        "name": "paracetamol",
+        "qty": 0 
+        // default 0 ketika dokter create
+    },{
+         "name": "bodrex",
+        "qty": 0 
+        // default 0 ketika dokter create
+    }],
     "biayaObat": 10200,
-    "statusPembayaran": "LUNAS",
-    "obat": "obat"
+    "statusPembayaran": "LUNAS"
 }
 
 //GET REKAM MEDIS
@@ -171,9 +180,28 @@ Content-Type: application/json
 
 //GET Detail REKAM MEDIS
 ###
-GET http://localhost:5005/medical-record/d51d2b87-d196-405a-b712-c59f4840d36b
+GET http://localhost:5005/medical-record/a2eedc24-7814-4d6f-9917-bd99bd273262
 Authorization: Bearer {{token}}
 Content-Type: application/json
+
+//Update QTY OBAT
+###
+PUT http://localhost:5005/medical-Record/a2eedc24-7814-4d6f-9917-bd99bd273262
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "obat": 
+    [{
+        "name": "paracetamol oye",
+        "qty": 0 
+        // default 0 ketika dokter create
+    },{
+         "name": "bodrex mangtap",
+        "qty": 0 
+        // default 0 ketika dokter create
+    }]
+}
 
 //Update Rekam Medis
 ###
