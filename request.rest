@@ -219,12 +219,12 @@ Content-Type: application/json
 
 //Update Rekam Medis
 ###
-PUT http://localhost:5005/medical-Record/d51d2b87-d196-405a-b712-c59f4840d36b
+PUT http://localhost:5005/medical-Record/a2eedc24-7814-4d6f-9917-bd99bd273262
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "patientId": "319a2b5f-00aa-452a-af77-c6ce1b069270",
+    "patientId": "1e0e37c9-63ef-4306-a6b9-f29983b4f289",
     "pelayanan": "oke sip y",
     "keluhan": "oke sip y", 
     // keluhan yang diraskan
@@ -235,8 +235,27 @@ Content-Type: application/json
     // tindakan yang dilakukan dokter dengan memberikan obat apa aja
     "biayaLayanan": 1000,
     "biayaObat": 9000,
-    "statusPembayaran": "LUNAS"
+    "statusPembayaran": "LUNAS",
     // jika biaya layanan, biaya obat, status pembayaran diupdate maka transaksi juga akan diupdate
+    "obat": 
+    [{
+        "name": "paracetamol oye",
+        "qty": 1 
+        // default 0 ketika dokter create
+    },{
+         "name": "bodrex mangtap",
+        "qty": 1
+        // default 0 ketika dokter create
+    }],
+    "tindakan": [{
+        "name": "oprasi",
+        "qty": 2 
+        // default 0 ketika dokter create
+    },{
+         "name": "jahit",
+        "qty": 2 
+        // default 0 ketika dokter create
+    }]
 }
 
 //GET TRANSACTION
@@ -245,10 +264,11 @@ Content-Type: application/json
 // berikaitan antara tindakan yaitu isi obat dan biayaObat
 // jika tindakan dirubah maka biaya obat juga akan berubah
 // Jadi menyebabkan biaya transaksi juga berubah
-# ###
-# GET http://localhost:5005/transaction?invoiceId=
-# Authorization: Bearer {{token}}
-# Content-Type: application/json
+
+###
+GET http://localhost:5005/transaction?invoiceId=635a5c07-631f-445c-aa5a-a4bb32bc6f3d
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
 ###
 GET http://localhost:5005/transaction/ugd

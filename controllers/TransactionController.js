@@ -46,6 +46,15 @@ class TransactionController {
           month: "long",
           year: "numeric",
         });
+
+        let totalQtyObat = JSON.parse(obat).reduce(
+          (acc, item) => acc + item.qty,
+          0
+        );
+        let totalQtyTindakan = JSON.parse(tindakan).reduce(
+          (acc, item) => acc + item.qty,
+          0
+        );
         return {
           id,
           idRekamMedis,
@@ -54,6 +63,8 @@ class TransactionController {
           total_payment,
           status,
           createdAt,
+          totalQtyObat,
+          totalQtyTindakan,
           purchased: JSON.parse(purchased),
           obat: JSON.parse(obat),
           tindakan: JSON.parse(tindakan),
