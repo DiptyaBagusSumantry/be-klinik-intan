@@ -57,7 +57,7 @@ const MedicalRecord = (sequelizeInstance) => {
         },
       },
       tindakan: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT("long"),
         allowNull: false,
         validate: {
           notNull: {
@@ -71,7 +71,7 @@ const MedicalRecord = (sequelizeInstance) => {
         },
       },
       obat: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT("long"),
         allowNull: false,
         validate: {
           notNull: {

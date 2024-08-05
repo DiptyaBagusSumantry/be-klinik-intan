@@ -43,10 +43,10 @@ class MedicalRecord {
         pelayanan,
         keluhan,
         diagnosa,
-        tindakan,
+        tindakan: JSON.stringify(tindakan),
         patientId,
         kode_diagnosa: kodeDiagnosa,
-        obat: JSON.stringify(obat)
+        obat: JSON.stringify(obat),
       });
       await Models.Transaction.create({
         total_payment: biaya,
@@ -122,7 +122,7 @@ class MedicalRecord {
           keluhan,
           diagnosa,
           kode_diagnosa,
-          tindakan,
+          tindakan: JSON.parse(tindakan),
           createdAt,
           biayaLayanan,
           biayaObat,
@@ -172,7 +172,7 @@ class MedicalRecord {
           pelayanan: pelayanan ? pelayanan : getDetailRM.pelayanan,
           keluhan: keluhan ? keluhan : getDetailRM.keluhan,
           diagnosa: diagnosa ? diagnosa : getDetailRM.diagnosa,
-          tindakan: tindakan ? tindakan : getDetailRM.tindakan,
+          tindakan: tindakan ? JSON.stringify(tindakan) : getDetailRM.tindakan,
           patientId: patientId ? patientId : getDetailRM.patientId,
           kode_diagnosa: kodeDiagnosa ? kodeDiagnosa : getDetailRM.kode_diagnosa,
           obat: obat ? JSON.stringify(obat) : getDetailRM.obat
@@ -215,6 +215,7 @@ class MedicalRecord {
           kode_diagnosa,
           tindakan,
           patientId,
+          obat
         } = result.dataValues;
         const {
           no_rm,
@@ -247,7 +248,8 @@ class MedicalRecord {
           keluhan,
           diagnosa,
           kode_diagnosa,
-          tindakan,
+          tindakan: JSON.parse(tindakan),
+          obat: JSON.parse(obat),
           patientId,
           no_rm,
           nik,

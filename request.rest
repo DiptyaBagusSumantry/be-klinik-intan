@@ -155,7 +155,15 @@ Content-Type: application/json
     // keluhan yang diraskan
     "diagnosa": "oke", 
     //hasil analiysis dokter, termasuk penyakit dalam katagori apa
-    "tindakan": "oke", 
+    "tindakan": [{
+        "name": "oprasi",
+        "qty": 0 
+        // default 0 ketika dokter create
+    },{
+         "name": "jahit",
+        "qty": 0 
+        // default 0 ketika dokter create
+    }], 
     // tindakan yang dilakukan dokter dengan memberikan obat apa aja
     "biayaLayanan": 50000,
     "obat": 
