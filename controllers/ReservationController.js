@@ -41,7 +41,7 @@ class ReservationController {
           where: { id: userId.id },
         }).then((data) => {
           fetch = {
-            username: data.fullname,
+            fullname: data.fullname,
             role: userId.role,
             id: userId.id,
           };
@@ -53,7 +53,7 @@ class ReservationController {
           console.log(userId);
           console.log(data);
           fetch = {
-            username: data.username,
+            fullname: data.fullname,
             role: userId.role,
             id: userId.id,
           };
@@ -104,7 +104,7 @@ class ReservationController {
         ruangan: ruangan ? ruangan : " ",
         masukMelalui: masukMelalui ? masukMelalui : " ",
         pengantarPatient: pengantarPatient ? pengantarPatient : " ",
-        namaPetugas: fetch.username,
+        namaPetugas: fetch.fullname,
       });
 
       const detailPatient = await Models.Patient.findOne({
