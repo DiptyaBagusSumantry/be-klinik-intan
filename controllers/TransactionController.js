@@ -40,6 +40,7 @@ class TransactionController {
           data.dataValues;
         const fullname =
           data.dataValues.medical_record.dataValues.patient.fullname;
+        const { id: idRekamMedis, obat, tindakan } = data.dataValues.medical_record.dataValues;
         createdAt = new Date(createdAt).toLocaleDateString("id-ID", {
           day: "2-digit",
           month: "long",
@@ -47,13 +48,15 @@ class TransactionController {
         });
         return {
           id,
-          idRekamMedis: data.dataValues.medical_record.dataValues.id,
+          idRekamMedis,
           invoice,
           fullname,
           total_payment,
           status,
           createdAt,
           purchased: JSON.parse(purchased),
+          obat: JSON.parse(obat),
+          tindakan: JSON.parse(tindakan),
         };
       });
       // handleGetPaginator(res, paginator(results, page ? page : 1, 20));
@@ -133,6 +136,7 @@ class TransactionController {
   
       const data = {
         ...get.dataValues,
+        purchased: JSON.parse(get.dataValues),
         obat: JSON.parse(get.dataValues.medical_record.dataValues.obat),
         tindakan: JSON.parse(get.dataValues.medical_record.dataValues.tindakan),
       };
