@@ -134,6 +134,7 @@ class TransactionController {
       const data = {
         ...get.dataValues,
         obat: JSON.parse(get.dataValues.medical_record.dataValues.obat),
+        tindakan: JSON.parse(get.dataValues.medical_record.dataValues.tindakan),
       };
       handleGet(res, data);
     } catch (error) {
