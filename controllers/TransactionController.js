@@ -120,21 +120,26 @@ class TransactionController {
       handlerError(res, error);
     }
   }
-  // static async updateInvoice(req, res) {
-  //   try {
-  //     const update = await Transaction.update(
-  //       { status: req.body.status },
-  //       {
-  //         where: {
-  //           id: req.params.id,
-  //         },
-  //       }
-  //     );
-  //     handleUpdate(res, update);
-  //   } catch (error) {
-  //     handlerError(res, error);
-  //   }
-  // }
+  static async getInvoiceObat(req, res) {
+    try {
+      const get = await Transaction.findOne(
+        {
+          where: {
+            id: req.params.id,
+          },
+          include: {model: Models.MedicalRecord}
+        }
+      );
+  
+      const data = {
+        ...get.dataValues,
+        obat: JSON.parse(get.dataValues.medical_record.dataValues.obat),
+      };
+      handleGet(res, data);
+    } catch (error) {
+      handlerError(res, error);
+    }
+  }
 }
 
 module.exports = TransactionController;

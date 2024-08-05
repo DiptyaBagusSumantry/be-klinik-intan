@@ -184,6 +184,12 @@ GET http://localhost:5005/medical-record/a2eedc24-7814-4d6f-9917-bd99bd273262
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
+//GET Obat by Transaction ID
+###
+GET http://localhost:5005/invoice-obat/635a5c07-631f-445c-aa5a-a4bb32bc6f3d
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
 //Update QTY OBAT
 ###
 PUT http://localhost:5005/medical-Record/a2eedc24-7814-4d6f-9917-bd99bd273262
@@ -267,6 +273,12 @@ Content-Type: application/json
 //Detail Reservasi
 ###
 GET  http://localhost:5005/reservation/7373ac8d-0c0f-4edf-9579-6121cf1336d4
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+//Detail Inovice
+###
+GET  http://localhost:5005/detail-obat/7373ac8d-0c0f-4edf-9579-6121cf1336d4
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

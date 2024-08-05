@@ -154,6 +154,11 @@ router.get("/service", verifyToken, ServiceController.getService);
 router.get("/transaction", verifyToken, TransactionController.getTransaction);
 router.get("/transaction/:type", verifyToken, TransactionController.getTypeTransaction);
 
+router.get(
+  "/invoice-obat/:id",
+  verifyToken,
+  TransactionController.getInvoiceObat
+);
 // router.get("/reservation-patient/:patientId", verifyToken, IsUser, ReservationController.getDetailbyPatient);
 
 module.exports = router;
