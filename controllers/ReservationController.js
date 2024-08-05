@@ -150,9 +150,9 @@ class ReservationController {
         whereClause.where = searchWhere(search, "queue", "date");
       }
 
-      if (userId.role != "Admin") {
-        whereClause.where.patientId = userId.id;
-      }
+      // if (userId.role != "Admin") {
+      //   whereClause.where.patientId = userId.id;
+      // }
 
       await Reservation.findAll(whereClause).then((get) => {
         const results = get.map((data) => {
